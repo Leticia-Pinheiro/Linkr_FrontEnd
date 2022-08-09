@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import AuthScreen from "../authScreen/AuthScreen";
+import urls from "../shared/urls";
+import AuthLoading from "../shared/AuthLoading";
 
 export default function Signup() {
 	const [singupDataInput, setSingupDataInput] = useState({
@@ -10,6 +14,8 @@ export default function Signup() {
 		username: "",
 		url: "",
 	});
+	const navigate = useNavigate();
+	const [blockButtom, setBlockButtom] = useState(false);
 
 	function handleFormChange(e) {
 		let data = { ...singupDataInput };
@@ -17,9 +23,33 @@ export default function Signup() {
 		setSingupDataInput(data);
 	}
 
+	async function submitSignup(e) {
+		e.preventDefault();
+		setBlockButtom(true);
+
+		await axios
+			.post(urls.signup, singupDataInput)
+			.then(() => {
+				alert("Cadastro efetuado com sucesso!");
+				navigate("/");
+			})
+			.catch((err) => {
+				setBlockButtom(false);
+				if (err.response.status === 409) {
+					alert("Usuário já registrado!");
+				} else {
+					alert(err.response.data);
+				}
+			});
+	}
+
+	function toLogin() {
+		navigate("/");
+	}
+
 	return (
 		<AuthScreen>
-			<Forms onSubmit={""}>
+			<Forms onSubmit={submitSignup}>
 				<input
 					type="email"
 					name="email"
@@ -53,8 +83,10 @@ export default function Signup() {
 					value={singupDataInput.url}
 					required
 				/>
-				<Button type="submit">Sign Up</Button>
-				<Switch>Switch back to log in</Switch>
+				<Button type="submit" block={blockButtom}>
+					{blockButtom ? <AuthLoading /> : "Sign Up"}
+				</Button>
+				<Switch onClick={toLogin}>Switch back to log in</Switch>
 			</Forms>
 		</AuthScreen>
 	);
@@ -75,11 +107,11 @@ const Forms = styled.form`
 		height: 65px;
 		margin-top: 25px;
 		width: 100%;
+		padding-left: 15px;
 
 		::placeholder {
 			font-size: 27px;
 			color: #9f9f9f;
-			padding-left: 15px;
 		}
 	}
 `;
@@ -98,6 +130,7 @@ const Button = styled.button`
 	font-size: 27px;
 	border: none;
 	color: white;
+	pointer-events: ${(props) => (props.block ? "none" : null)};
 `;
 
 const Switch = styled.div`
