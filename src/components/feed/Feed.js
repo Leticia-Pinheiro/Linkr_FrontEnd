@@ -1,24 +1,34 @@
 import styled from 'styled-components'
-import {useState} from 'react'
+import {useState, useContext} from 'react'
+import { useNavigate } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowUp} from 'react-icons/io'
+import UserContext from "../context/UserContext.js";
 
 export default function Feed(){
     const  [ showLogout ,  setShowLogout ]  =  useState ( false )  
+    const navigate = useNavigate();
+    const {userInformation, setUserInformation} = useContext(UserContext)
 
     function  showOrHide () {        
         setShowLogout  (  !  showLogout  )      
     }
+
+    function toLogin(){
+        navigate ("/")
+        setUserInformation(null)
+        localStorage.clear();        
+    }
     
     return(
-        <Container disabled={showLogout}>
+        <Container >
             <Header>
                 <h1>linkr</h1>
 
-                <div>                    
+                <div onClick = {showOrHide}>                    
                     {showLogout?
-                        <ArrowDown onClick = {showOrHide}/>                        
+                        <ArrowUp />                     
                         : 
-                        <ArrowUp onClick = {showOrHide}/>
+                        <ArrowDown />    
                         
                     } 
                      
@@ -27,7 +37,7 @@ export default function Feed(){
             </Header>
 
             {showLogout?
-                <Logout>
+                <Logout onClick={toLogin}>
                     Logout
                 </Logout> 
              : null}
@@ -76,6 +86,7 @@ const Header = styled.div`
             border-radius: 50%;
             background-color: #ffffff;
             margin-right: 17px;
+            cursor: pointer;
 
             @media (max-width: 700px) {
                 width: 44px;
