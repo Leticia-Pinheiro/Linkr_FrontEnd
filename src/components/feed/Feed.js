@@ -14,9 +14,10 @@ export default function Feed(){
     }
 
     function toLogin(){
+        localStorage.clear(); 
         navigate ("/")
         setUserInformation(null)
-        localStorage.clear();        
+               
     }
     
     return(
