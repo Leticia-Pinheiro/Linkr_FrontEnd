@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import {useState} from 'react'
+import { IoIosArrowDown, IoIosArrowUp} from 'react-icons/io'
 
 export default function Feed(){
     const  [ showLogout ,  setShowLogout ]  =  useState ( false )  
@@ -15,9 +16,10 @@ export default function Feed(){
 
                 <div>                    
                     {showLogout?
-                        <ion-icon name="chevron-up-outline" onClick = {showOrHide}></ion-icon>
+                        <ArrowDown onClick = {showOrHide}/>                        
                         : 
-                        <ion-icon name="chevron-down-outline" onClick = {showOrHide}></ion-icon>
+                        <ArrowUp onClick = {showOrHide}/>
+                        
                     } 
                      
                     <div></div>               
@@ -29,7 +31,7 @@ export default function Feed(){
                     Logout
                 </Logout> 
              : null}
-              
+
         </Container>
     )
 }
@@ -66,19 +68,8 @@ const Header = styled.div`
     
     div{
         display: flex;
-        align-items: center;        
-
-        ion-icon{
-            color: #ffffff;
-            font-size: 30px;
-            cursor: pointer;
-            margin-right: 17px;
-
-            @media (max-width: 700px) {
-                font-size: 25px;
-                margin-right: 12px;
-            }
-        }
+        align-items: center;         
+       
         div{
             width: 53px;
             height: 53px;
@@ -93,6 +84,30 @@ const Header = styled.div`
             }
         }
     }`
+
+const ArrowDown = styled(IoIosArrowDown)`
+    color: #ffffff;
+    font-size: 30px;
+    cursor: pointer;
+    margin-right: 17px;
+
+    @media (max-width: 700px) {
+        font-size: 25px;
+        margin-right: 12px;
+    }
+`
+
+const ArrowUp = styled(IoIosArrowUp)`
+    color: #ffffff;
+    font-size: 30px;
+    cursor: pointer;
+    margin-right: 17px;
+
+    @media (max-width: 700px) {
+        font-size: 25px;
+        margin-right: 12px;
+    }
+`
 
 const Logout = styled.div`
     width: 150px;
@@ -110,4 +125,10 @@ const Logout = styled.div`
     position: fixed;
     right: 0;
     cursor: pointer;
+
+        @media (max-width: 700px) {
+            height: 43px;
+            font-size: 15px;
+        }
+
     `
