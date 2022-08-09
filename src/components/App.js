@@ -14,9 +14,9 @@ export default function App() {
 
 			<BrowserRouter>
 				<Routes>
-					<Route path="/feed" element={<AuthScreen />} />
+					<Route path="/" element={<AuthScreen />} />
 					<Route path="/signup" element={<Signup />} />
-					<Route path="/" element={<Feed />} />
+					<Route path="/feed" element={<Feed />} />
 				</Routes>
 			</BrowserRouter>
 		</>
