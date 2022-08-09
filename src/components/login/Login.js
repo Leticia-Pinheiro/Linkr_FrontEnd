@@ -56,7 +56,6 @@ export default function Login() {
 				.then((response) => {
 					setUserInformation(response.data);
 					navigate("/timeline");
-					console.log(response.data);
 				})
 				.catch((err) => {
 					if (err.response.status === 401) {
