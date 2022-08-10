@@ -5,15 +5,13 @@ import Button from "../shared/Button";
 import urls from "../shared/urls";
 import UserContext from "../context/UserContext";
 
-export default function PostInterface() {
+export default function PostInterface({ setControlApi }) {
 	const { userInformation } = useContext(UserContext);
 	const [isActive, setIsActive] = useState(true);
 	const [post, setPost] = useState({
 		url: "",
 		text: "",
 	});
-
-	console.log(userInformation);
 
 	function handleForm(e) {
 		setPost({
@@ -25,6 +23,7 @@ export default function PostInterface() {
 	function submitForm(e) {
 		e.preventDefault();
 
+		setControlApi(true);
 		setIsActive(false);
 
 		const body = {
@@ -49,7 +48,7 @@ export default function PostInterface() {
 
 	return (
 		<Container>
-			<ProfilePicture />
+			<ProfilePicture src={userInformation.image} alt="avatar" />
 			<InputContainer>
 				<Title>What are you goin to share today?</Title>
 				<Form onSubmit={isActive ? submitForm : (e) => e.preventDefault()}>
@@ -88,6 +87,11 @@ const Container = styled.div`
 	background-color: #fff;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 16px;
+	margin: 40px 0 30px 0;
+
+	@media (max-width: 700px) {
+		border-radius: 0;
+	}
 `;
 
 const Title = styled.h2`
@@ -153,7 +157,7 @@ const TextInput = styled.textarea`
 	}
 `;
 
-const ProfilePicture = styled.div`
+const ProfilePicture = styled.img`
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;

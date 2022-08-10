@@ -6,6 +6,7 @@ import Feed from "../feed/Feed";
 import RenderPosts from "./RenderPosts";
 import urls from "../shared/urls";
 import FeedLoading from "../shared/FeedLoading";
+import PostInterface from "./PostInterface";
 
 export default function Timeline() {
 	const [postsData, setPostsData] = useState("error");
@@ -31,7 +32,7 @@ export default function Timeline() {
 		<Feed>
 			<Title>timeline</Title>
 
-			<CriarPost>criar posts</CriarPost>
+			<PostInterface setControlApi={setControlApi} />
 
 			{controlLoading ? (
 				<FeedLoading />
@@ -54,10 +55,10 @@ const Title = styled.p`
 	font-weight: bold;
 	font-size: 43px;
 	color: #ffffff;
-`;
 
-const CriarPost = styled.div`
-	margin: 45px 0 30px 0;
+	@media (max-width: 700px) {
+		margin-left: 20px;
+	}
 `;
 
 const ErrorText = styled.p`

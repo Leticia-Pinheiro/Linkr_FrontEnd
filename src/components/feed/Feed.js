@@ -143,6 +143,6 @@ const Body = styled.div`
 
 	@media (max-width: 700px) {
 		width: 100%;
-		margin: 0;
+		margin-top: 120px;
 	}
 `;
