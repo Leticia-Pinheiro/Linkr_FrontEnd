@@ -1,16 +1,20 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components"
 import Button from "../shared/Button";
 import urls from "../shared/urls";
+import UserContext from "../context/UserContext";
 
 export default function PostInterface () {
 
+    const {userInformation, setUserInformation} = useContext(UserContext)
     const [isActive, setIsActive] = useState(true);
     const [post, setPost] = useState({
         url: "",
         text: ""
     });
+
+    console.log(userInformation)
 
     function handleForm (e) {
         setPost({
