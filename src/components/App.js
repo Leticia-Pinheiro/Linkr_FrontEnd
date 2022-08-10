@@ -6,7 +6,7 @@ import GlobalStyle from "../assets/css/GlobalStyle";
 import Login from "./login/Login";
 import Signup from "./signup/Signup";
 import UserContext from "./context/UserContext";
-import PostInterface from "./timeline/PostInterface";
+import Timeline from "./timeline/Timeline";
 
 export default function App() {
 	const [userInformation, setUserInformation] = useState({
@@ -31,7 +31,7 @@ export default function App() {
 						<Route path="/signup" element={<Signup />} />
 
 
-						<Route path="/timeline" element={<PostInterface />} />
+						<Route path="/timeline" element={<Timeline />} />
 						
 
 
