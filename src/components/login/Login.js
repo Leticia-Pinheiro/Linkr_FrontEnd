@@ -6,6 +6,7 @@ import axios from "axios";
 import urls from "../shared/urls";
 import AuthLoading from "../shared/AuthLoading";
 import UserContext from "../context/UserContext";
+import AuthScreen from "../authScreen/AuthScreen";
 
 export default function Login() {
 	const [loginDataInput, setLoginDataInput] = useState({
@@ -47,7 +48,7 @@ export default function Login() {
 	}
 
 	return (
-		<>
+		<AuthScreen>
 			<Forms onSubmit={submitLogin}>
 				<input
 					type="email"
@@ -70,7 +71,7 @@ export default function Login() {
 				</Button>
 				<Switch onClick={toSignup}>First time? Create an account!</Switch>
 			</Forms>
-		</>
+		</AuthScreen>
 	);
 }
 

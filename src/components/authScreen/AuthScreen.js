@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import Login from "../login/Login";
-
 export default function AuthScreen(props) {
 	return (
 		<Box>
@@ -9,7 +7,7 @@ export default function AuthScreen(props) {
 				<Logo>linkr</Logo>
 				<Text>save, share and discover the best links on the web</Text>
 			</BoxTitle>
-			<BoxForms>{!props.children ? <Login /> : props.children}</BoxForms>
+			<BoxForms>{props.children}</BoxForms>
 		</Box>
 	);
 }
