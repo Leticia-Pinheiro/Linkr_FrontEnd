@@ -10,6 +10,11 @@ const GlobalStyle = createGlobalStyle`
         background: #333333;
     }
 
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
 `;
 
 export default GlobalStyle;

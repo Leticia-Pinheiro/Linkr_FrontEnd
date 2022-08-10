@@ -3,19 +3,22 @@ import { useState } from "react";
 
 import GlobalResetStyle from "../assets/css/GlobalResetStyle";
 import GlobalStyle from "../assets/css/GlobalStyle";
-import AuthScreen from "./authScreen/AuthScreen";
+import Login from "./login/Login";
 import Signup from "./signup/Signup";
-import Feed from "./feed/Feed.js"
 import UserContext from "./context/UserContext";
 import Timeline from "./timeline/Timeline";
 
-
 export default function App() {
-	const [userInformation, setUserInformation] = useState(null);
+	const [userInformation, setUserInformation] = useState({
+		imageAvatar: localStorage?.getItem("avatar"),
+		token: localStorage?.getItem("token"),
+	});
+
+	console.log(userInformation);
 	return (
 		<>
 			<GlobalResetStyle />
-			<GlobalStyle />		
+			<GlobalStyle />
 
 			<UserContext.Provider
 				value={{
@@ -25,10 +28,9 @@ export default function App() {
 			>
 				<BrowserRouter>
 					<Routes>
-						<Route path="/" element={<AuthScreen />} />
+						<Route path="/" element={<Login />} />
 						<Route path="/signup" element={<Signup />} />
 						<Route path="/timeline" element={<Timeline />} />
-						<Route path="/feed" element={<Feed />} />
 					</Routes>
 				</BrowserRouter>
 			</UserContext.Provider>
