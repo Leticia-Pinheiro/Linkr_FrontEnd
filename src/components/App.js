@@ -9,7 +9,12 @@ import UserContext from "./context/UserContext";
 import Timeline from "./timeline/Timeline";
 
 export default function App() {
-	const [userInformation, setUserInformation] = useState(null);
+	const [userInformation, setUserInformation] = useState({
+		imageAvatar: localStorage?.getItem("avatar"),
+		token: localStorage?.getItem("token"),
+	});
+
+	console.log(userInformation);
 	return (
 		<>
 			<GlobalResetStyle />

@@ -15,7 +15,7 @@ export default function Login() {
 	});
 	const navigate = useNavigate();
 	const [blockButtom, setBlockButtom] = useState(false);
-	const { setUserInformation } = useContext(UserContext);
+	const { setUserInformation, userInformation } = useContext(UserContext);
 
 	function handleFormChange(e) {
 		let data = { ...loginDataInput };
@@ -34,6 +34,8 @@ export default function Login() {
 
 				let serializationData = JSON.stringify({ ...loginDataInput });
 				localStorage.setItem("login", serializationData);
+				localStorage.setItem("avatar", response.data.image);
+				localStorage.setItem("token", response.data.token);
 
 				navigate("/timeline");
 			})
@@ -55,7 +57,8 @@ export default function Login() {
 			axios
 				.post(urls.signin, deserializationData)
 				.then((response) => {
-					setUserInformation(response.data);
+					const data = response.data;
+					setUserInformation({ ...userInformation, ...data });
 					navigate("/timeline");
 				})
 				.catch((err) => {
@@ -66,7 +69,7 @@ export default function Login() {
 					}
 				});
 		}
-	}, []);
+	});
 
 	function toSignup() {
 		navigate("/signup");

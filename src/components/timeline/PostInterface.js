@@ -48,7 +48,10 @@ export default function PostInterface({ setControlApi }) {
 
 	return (
 		<Container>
-			<ProfilePicture src={userInformation.image} alt="avatar" />
+			<ProfilePicture
+				src={userInformation.imageAvatar || userInformation.image}
+				alt="avatar"
+			/>
 			<InputContainer>
 				<Title>What are you goin to share today?</Title>
 				<Form onSubmit={isActive ? submitForm : (e) => e.preventDefault()}>
@@ -161,5 +164,4 @@ const ProfilePicture = styled.img`
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
-	background-color: blue;
 `;

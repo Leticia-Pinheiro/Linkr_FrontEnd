@@ -7,7 +7,7 @@ import UserContext from "../context/UserContext.js";
 export default function Feed(props) {
 	const [showLogout, setShowLogout] = useState(false);
 	const navigate = useNavigate();
-	const { userInformation, setUserInformation } = useContext(UserContext);
+	const { setUserInformation } = useContext(UserContext);
 
 	function showOrHide() {
 		setShowLogout(!showLogout);
