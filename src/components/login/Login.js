@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -29,8 +29,12 @@ export default function Login() {
 		await axios
 			.post(urls.signin, loginDataInput)
 			.then((response) => {
-				navigate("/timeline");
 				setUserInformation(response.data);
+
+				let serializationData = JSON.stringify({ ...loginDataInput });
+				localStorage.setItem("login", serializationData);
+
+				navigate("/timeline");
 			})
 			.catch((err) => {
 				setBlockButtom(false);
@@ -41,6 +45,27 @@ export default function Login() {
 				}
 			});
 	}
+
+	useEffect(() => {
+		if (localStorage.length > 0) {
+			let loginStoraged = localStorage.getItem("login");
+			let deserializationData = JSON.parse(loginStoraged);
+
+			axios
+				.post(urls.signin, deserializationData)
+				.then((response) => {
+					setUserInformation(response.data);
+					navigate("/timeline");
+				})
+				.catch((err) => {
+					if (err.response.status === 401) {
+						alert("Usuário/senha inválidos!");
+					} else {
+						alert(err.response.data);
+					}
+				});
+		}
+	}, []);
 
 	function toSignup() {
 		navigate("/signup");
