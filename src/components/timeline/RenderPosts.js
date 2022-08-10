@@ -22,6 +22,7 @@ export default function RenderPosts({ elem }) {
 							<LinkDescription>{elem.urlDescription}</LinkDescription>
 							<Link>{elem.url}</Link>
 						</LinkTextContainer>
+
 						<LinkImage src={elem.urlImage} alt="imageLink" />
 					</LinkContainer>
 				</BoxPostTexts>
@@ -126,8 +127,12 @@ const LinkTextContainer = styled.div`
 
 const LinkImage = styled.img`
 	border-radius: 0 11px 11px 0;
-	width: 40%;
+	width: calc(40% - 40px);
 	object-fit: fill;
+
+	@media (max-width: 700px) {
+		width: 40%;
+	}
 `;
 
 const LinkTitle = styled.p`

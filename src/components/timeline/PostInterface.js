@@ -23,20 +23,26 @@ export default function PostInterface({ setControlApi }) {
 	function submitForm(e) {
 		e.preventDefault();
 
-		setControlApi(true);
 		setIsActive(false);
 
 		const body = {
 			...post,
 		};
 
-		const promise = axios.post(urls.timeline, body);
+		const header = {
+			headers: {
+				Authorization: `Bearer ${userInformation.token}`,
+			},
+		};
+
+		const promise = axios.post(urls.timeline, body, header);
 		promise
 			.then(() => {
 				setPost({
 					url: "",
 					text: "",
 				});
+				setControlApi(true);
 			})
 			.catch(() => {
 				alert("Houve um erro ao publicar seu link!");
@@ -64,7 +70,7 @@ export default function PostInterface({ setControlApi }) {
 						required
 					/>
 					<TextInput
-						placeholder="teste"
+						placeholder="Description..."
 						name="text"
 						value={post.text}
 						onChange={handleForm}
