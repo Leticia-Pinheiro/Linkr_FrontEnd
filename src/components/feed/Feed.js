@@ -5,18 +5,22 @@ import { IoIosArrowDown, IoIosArrowUp} from 'react-icons/io'
 import UserContext from "../context/UserContext.js";
 
 export default function Feed(){
+    
     const  [ showLogout ,  setShowLogout ]  =  useState ( false )  
     const navigate = useNavigate();
     const {userInformation, setUserInformation} = useContext(UserContext)
 
+
     function  showOrHide () {        
-        setShowLogout  (  !  showLogout  )      
+        setShowLogout  (  !  showLogout  )
+        console.log(userInformation)
+              
     }
 
     function toLogin(){
         localStorage.clear(); 
         navigate ("/")
-        setUserInformation(null)
+        setUserInformation(null)        
                
     }
     
@@ -31,9 +35,9 @@ export default function Feed(){
                         : 
                         <ArrowDown />    
                         
-                    } 
-                     
-                    <div></div>               
+                    }               
+                    
+                    <img src = {userInformation.image} alt="user-image" ></img>       
                 </div>
             </Header>
 
@@ -81,11 +85,10 @@ const Header = styled.div`
         display: flex;
         align-items: center;         
        
-        div{
+        img{
             width: 53px;
             height: 53px;
-            border-radius: 50%;
-            background-color: #ffffff;
+            border-radius: 50%;            
             margin-right: 17px;
             cursor: pointer;
 

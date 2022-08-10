@@ -26,7 +26,7 @@ export default function App() {
 					<Routes>
 						<Route path="/" element={<AuthScreen />} />
 						<Route path="/signup" element={<Signup />} />
-						<Route path="/feed" element={<Feed />} />				
+						<Route path="/timeline" element={<Feed />} />				
 					</Routes>
 				</BrowserRouter>
 			</UserContext.Provider>
