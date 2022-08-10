@@ -7,6 +7,7 @@ import AuthScreen from "./authScreen/AuthScreen";
 import Signup from "./signup/Signup";
 import Feed from "./feed/Feed.js"
 import UserContext from "./context/UserContext";
+import Timeline from "./timeline/Timeline";
 
 
 export default function App() {
@@ -26,11 +27,11 @@ export default function App() {
 					<Routes>
 						<Route path="/" element={<AuthScreen />} />
 						<Route path="/signup" element={<Signup />} />
-						<Route path="/feed" element={<Feed />} />				
+						<Route path="/timeline" element={<Timeline />} />
+						<Route path="/feed" element={<Feed />} />
 					</Routes>
 				</BrowserRouter>
 			</UserContext.Provider>
-
 		</>
 	);
 }

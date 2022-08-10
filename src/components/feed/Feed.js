@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowUp} from 'react-icons/io'
 import UserContext from "../context/UserContext.js";
 
-export default function Feed(){
+export default function Feed({ children }){
     const  [ showLogout ,  setShowLogout ]  =  useState ( false )  
     const navigate = useNavigate();
     const {userInformation, setUserInformation} = useContext(UserContext)
@@ -42,6 +42,8 @@ export default function Feed(){
                     Logout
                 </Logout> 
              : null}
+
+             {children}
 
         </Container>
     )
