@@ -6,6 +6,7 @@ import GlobalStyle from "../assets/css/GlobalStyle";
 import AuthScreen from "./authScreen/AuthScreen";
 import Signup from "./signup/Signup";
 import UserContext from "./context/UserContext";
+import Timeline from "./timeline/Timeline";
 
 export default function App() {
 	const [userInformation, setUserInformation] = useState(null);
@@ -23,6 +24,7 @@ export default function App() {
 					<Routes>
 						<Route path="/" element={<AuthScreen />} />
 						<Route path="/signup" element={<Signup />} />
+						<Route path="/timeline" element={<Timeline />} />
 					</Routes>
 				</BrowserRouter>
 			</UserContext.Provider>
