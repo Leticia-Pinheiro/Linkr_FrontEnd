@@ -14,7 +14,6 @@ export default function App() {
 		token: localStorage?.getItem("token"),
 	});
 
-	console.log(userInformation);
 	return (
 		<>
 			<GlobalResetStyle />
