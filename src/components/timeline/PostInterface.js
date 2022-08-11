@@ -29,6 +29,8 @@ export default function PostInterface({ setControlApi }) {
 			...post,
 		};
 
+		hashtag(post.text)
+
 		const header = {
 			headers: {
 				Authorization: `Bearer ${userInformation.token}`,
@@ -50,6 +52,15 @@ export default function PostInterface({ setControlApi }) {
 			.finally(() => {
 				setIsActive(true);
 			});
+	}
+
+	function hashtag(str){
+		const hashtag = str.match(/#\w+/g);
+		  if(hashtag){			
+			const hashtags = hashtag.map(hashtag => hashtag.slice(1));
+			console.log (hashtags)
+		  }		  
+		  return [];
 	}
 
 	return (
