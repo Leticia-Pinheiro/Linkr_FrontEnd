@@ -1,17 +1,20 @@
 import styled from "styled-components";
+import Like from "./Like";
 
 export default function RenderPosts({ elem }) {
 	function openLink(url) {
 		window.open(url);
 	}
-
+	
 	return (
 		<>
 			<Box>
 				<BoxPictureAndLike>
 					<Picture src={elem.imageUrl} alt="avatar" />
 
-					<Likes></Likes>
+					<Likes>
+						<Like postId={elem.id} liked={elem.liked}/>
+					</Likes>
 				</BoxPictureAndLike>
 				<BoxPostTexts>
 					<User>{elem.username}</User>

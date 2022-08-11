@@ -30,7 +30,13 @@ export default function PostInterface({ setControlApi }) {
 			...post,
 		};
 
-		const promise = axios.post(urls.timeline, body);
+		const header = {
+            headers: {
+                Authorization: `Bearer ${userInformation.token}`
+            }
+        };
+
+		const promise = axios.post(urls.timeline, body, header);
 		promise
 			.then(() => {
 				setPost({
@@ -44,6 +50,7 @@ export default function PostInterface({ setControlApi }) {
 			.finally(() => {
 				setIsActive(true);
 			});
+			
 	}
 
 	return (
@@ -64,7 +71,7 @@ export default function PostInterface({ setControlApi }) {
 						required
 					/>
 					<TextInput
-						placeholder="teste"
+						placeholder="Description..."
 						name="text"
 						value={post.text}
 						onChange={handleForm}

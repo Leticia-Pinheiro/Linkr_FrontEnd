@@ -69,7 +69,7 @@ export default function Login() {
 					}
 				});
 		}
-	});
+	},[]);
 
 	function toSignup() {
 		navigate("/signup");
