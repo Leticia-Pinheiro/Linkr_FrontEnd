@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import DeleteModal from "./DeleteModal";
 import { MdDelete } from "react-icons/md";
+import Like from "./Like";
 
 export default function RenderPosts({ elem, setControlApi }) {
 	const [modalIsOpen, setIsOpen] = useState(false);
@@ -12,7 +13,7 @@ export default function RenderPosts({ elem, setControlApi }) {
 	function openLink(url) {
 		window.open(url);
 	}
-
+	
 	return (
 		<>
 			<Box>
@@ -25,7 +26,9 @@ export default function RenderPosts({ elem, setControlApi }) {
 				<BoxPictureAndLike>
 					<Picture src={elem.imageUrl} alt="avatar" />
 
-					<Likes></Likes>
+					<Likes>
+						<Like postId={elem.id} liked={elem.liked}/>
+					</Likes>
 				</BoxPictureAndLike>
 				<BoxPostTexts>
 					<Delete
