@@ -7,6 +7,7 @@ import Login from "./login/Login";
 import Signup from "./signup/Signup";
 import UserContext from "./context/UserContext";
 import Timeline from "./timeline/Timeline";
+import Hashtag from "./timeline/Hashtag.js"
 
 export default function App() {
 	const [userInformation, setUserInformation] = useState({
@@ -29,9 +30,8 @@ export default function App() {
 					<Routes>
 						<Route path="/" element={<Login />} />
 						<Route path="/signup" element={<Signup />} />
-
-
 						<Route path="/timeline" element={<Timeline />} />
+						<Route path="/hashtag/:hashtag" element={<Hashtag />} />
 						
 
 

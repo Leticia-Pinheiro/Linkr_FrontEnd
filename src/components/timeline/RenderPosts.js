@@ -1,7 +1,10 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import  {  ReactTagify  }  from  "react-tagify"
 
 export default function RenderPosts({ elem }) {
+	const navigate = useNavigate()
+	
 	function openLink(url) {
 		window.open(url);
 	}
@@ -11,6 +14,10 @@ export default function RenderPosts({ elem }) {
 		cursor : 'pointer' 
 	  } ;
 	  
+	function tagPage(tag){
+		const hashtag = tag.slice(1);
+		navigate(`/hashtag/${hashtag}`)
+	}
 
 	return (
 		<>
@@ -25,7 +32,8 @@ export default function RenderPosts({ elem }) {
 
 					< ReactTagify  
 					tagStyle = { tagStyle }  
-					tagClicked = { ( tag ) =>  alert ( tag ) }> 
+					tagClicked = { ( tag ) => tagPage(tag)}
+					> 
 						<TextPost>{elem.text}</TextPost>
 					</ReactTagify>
 
