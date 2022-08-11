@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import UserContext from "../context/UserContext";
 import axios from "axios";
 
 import Feed from "../feed/Feed";
@@ -12,12 +13,19 @@ export default function Timeline() {
 	const [postsData, setPostsData] = useState("error");
 	const [controlApi, setControlApi] = useState(true);
 	const [controlLoading, setControlLoading] = useState(true);
+	const { userInformation } = useContext(UserContext);
 
 	if (controlApi) {
 		setControlApi(false);
 
+		const header = {
+            headers: {
+                Authorization: `Bearer ${userInformation.token}`
+            }
+        };
+
 		axios
-			.get(urls.getPosts)
+			.get(urls.getPosts, header)
 			.then((response) => {
 				setControlLoading(false);
 				setPostsData(response.data);
@@ -44,7 +52,9 @@ export default function Timeline() {
 			) : !postsData.length ? (
 				<NoPostsYet>There are no posts yet</NoPostsYet>
 			) : (
-				postsData.map((elem, index) => <RenderPosts key={index} elem={elem} />)
+				postsData.map((elem, index) => (
+					<RenderPosts key={index} elem={elem} setControlApi={setControlApi} />
+				))
 			)}
 		</Feed>
 	);
