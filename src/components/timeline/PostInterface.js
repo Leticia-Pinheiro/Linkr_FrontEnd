@@ -23,7 +23,6 @@ export default function PostInterface({ setControlApi }) {
 	function submitForm(e) {
 		e.preventDefault();
 
-		setControlApi(true);
 		setIsActive(false);
 
 		const body = {
@@ -43,6 +42,7 @@ export default function PostInterface({ setControlApi }) {
 					url: "",
 					text: "",
 				});
+				setControlApi(true);
 			})
 			.catch(() => {
 				alert("Houve um erro ao publicar seu link!");
