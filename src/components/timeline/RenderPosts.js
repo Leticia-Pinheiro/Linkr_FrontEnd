@@ -1,9 +1,16 @@
 import styled from "styled-components";
+import  {  ReactTagify  }  from  "react-tagify"
 
 export default function RenderPosts({ elem }) {
 	function openLink(url) {
 		window.open(url);
 	}
+
+	const  tagStyle  =  { 		
+		fontWeight : 700 , 
+		cursor : 'pointer' 
+	  } ;
+	  
 
 	return (
 		<>
@@ -15,7 +22,13 @@ export default function RenderPosts({ elem }) {
 				</BoxPictureAndLike>
 				<BoxPostTexts>
 					<User>{elem.username}</User>
-					<TextPost>{elem.text}</TextPost>
+
+					< ReactTagify  
+					tagStyle = { tagStyle }  
+					tagClicked = { ( tag ) =>  alert ( tag ) }> 
+						<TextPost>{elem.text}</TextPost>
+					</ReactTagify>
+
 					<LinkContainer onClick={() => openLink(elem.url)}>
 						<LinkTextContainer>
 							<LinkTitle>{elem.urlTitle}</LinkTitle>
