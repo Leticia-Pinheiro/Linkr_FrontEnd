@@ -1,8 +1,15 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export default function RenderPosts({ elem }) {
+	const navigate = useNavigate();
+
 	function openLink(url) {
 		window.open(url);
+	}
+
+	function goToUserPosts(id) {
+		navigate(`/user/${id}`);
 	}
 
 	return (
@@ -14,7 +21,9 @@ export default function RenderPosts({ elem }) {
 					<Likes></Likes>
 				</BoxPictureAndLike>
 				<BoxPostTexts>
-					<User>{elem.username}</User>
+					<User onClick={() => goToUserPosts(elem.idFromUser)}>
+						{elem.username}
+					</User>
 					<TextPost>{elem.text}</TextPost>
 					<LinkContainer onClick={() => openLink(elem.url)}>
 						<LinkTextContainer>
@@ -94,6 +103,7 @@ const User = styled.p`
 	font-weight: 400;
 	font-size: 19px;
 	color: #ffffff;
+	cursor: pointer;
 `;
 
 const TextPost = styled.p`
