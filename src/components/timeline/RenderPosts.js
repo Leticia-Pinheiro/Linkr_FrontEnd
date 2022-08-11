@@ -21,7 +21,7 @@ export default function RenderPosts({ elem }) {
 					<Likes></Likes>
 				</BoxPictureAndLike>
 				<BoxPostTexts>
-					<User onClick={() => goToUserPosts(elem.idFromUser)}>
+					<User onClick={() => goToUserPosts(elem.userId)}>
 						{elem.username}
 					</User>
 					<TextPost>{elem.text}</TextPost>
