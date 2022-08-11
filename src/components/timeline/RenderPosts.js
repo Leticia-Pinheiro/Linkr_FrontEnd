@@ -10,16 +10,16 @@ export default function RenderPosts({ elem, setControlApi }) {
 	const [modalIsOpen, setIsOpen] = useState(false);
 	let loginStoraged = localStorage.getItem("login");
 	let deserializationData = JSON.parse(loginStoraged);
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
 	function openLink(url) {
 		window.open(url);
 	}
-  
-  function goToUserPosts(id) {
+
+	function goToUserPosts(id) {
 		navigate(`/user/${id}`);
 	}
-	
+
 	return (
 		<>
 			<Box>
@@ -33,7 +33,7 @@ export default function RenderPosts({ elem, setControlApi }) {
 					<Picture src={elem.imageUrl} alt="avatar" />
 
 					<Likes>
-						<Like postId={elem.id} liked={elem.liked}/>
+						<Like postId={elem.id} liked={elem.liked} />
 					</Likes>
 				</BoxPictureAndLike>
 				<BoxPostTexts>

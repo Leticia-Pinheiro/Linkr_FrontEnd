@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5050";
+const BASE_URL = "http://localhost:5000";
 
 const urls = {
 	signup: `${BASE_URL}/signup`,
@@ -6,7 +6,7 @@ const urls = {
 	timeline: `${BASE_URL}/timeline`,
 	getPosts: `${BASE_URL}/posts`,
 	delete: `${BASE_URL}/posts`,
-	like: `${BASE_URL}/like`
+	like: `${BASE_URL}/like`,
 };
 
 export default urls;
