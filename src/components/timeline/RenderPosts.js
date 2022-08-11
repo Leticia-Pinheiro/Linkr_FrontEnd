@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import DeleteModal from "./DeleteModal";
 import { MdDelete } from "react-icons/md";
@@ -9,9 +10,14 @@ export default function RenderPosts({ elem, setControlApi }) {
 	const [modalIsOpen, setIsOpen] = useState(false);
 	let loginStoraged = localStorage.getItem("login");
 	let deserializationData = JSON.parse(loginStoraged);
+  const navigate = useNavigate();
 
 	function openLink(url) {
 		window.open(url);
+	}
+  
+  function goToUserPosts(id) {
+		navigate(`/user/${id}`);
 	}
 	
 	return (
@@ -37,7 +43,10 @@ export default function RenderPosts({ elem, setControlApi }) {
 						}
 						onClick={() => setIsOpen(true)}
 					/>
-					<User>{elem.username}</User>
+					<User onClick={() => goToUserPosts(elem.userId)}>
+						{elem.username}
+					</User>
+
 					<TextPost>{elem.text}</TextPost>
 					<LinkContainer onClick={() => openLink(elem.url)}>
 						<LinkTextContainer>
@@ -118,6 +127,7 @@ const User = styled.p`
 	font-weight: 400;
 	font-size: 19px;
 	color: #ffffff;
+	cursor: pointer;
 `;
 
 const TextPost = styled.p`

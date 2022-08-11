@@ -7,6 +7,7 @@ import Login from "./login/Login";
 import Signup from "./signup/Signup";
 import UserContext from "./context/UserContext";
 import Timeline from "./timeline/Timeline";
+import PostsFromUser from "./postsFromUser/PostsFromUser";
 
 export default function App() {
 	const [userInformation, setUserInformation] = useState({
@@ -30,6 +31,7 @@ export default function App() {
 						<Route path="/" element={<Login />} />
 						<Route path="/signup" element={<Signup />} />
 						<Route path="/timeline" element={<Timeline />} />
+						<Route path="/user/:id" element={<PostsFromUser />} />
 					</Routes>
 				</BrowserRouter>
 			</UserContext.Provider>
