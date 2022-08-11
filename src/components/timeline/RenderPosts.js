@@ -1,7 +1,15 @@
 import styled from "styled-components";
+import { useState } from "react";
+
+import DeleteModal from "./DeleteModal";
+import { MdDelete } from "react-icons/md";
 import Like from "./Like";
 
-export default function RenderPosts({ elem }) {
+export default function RenderPosts({ elem, setControlApi }) {
+	const [modalIsOpen, setIsOpen] = useState(false);
+	let loginStoraged = localStorage.getItem("login");
+	let deserializationData = JSON.parse(loginStoraged);
+
 	function openLink(url) {
 		window.open(url);
 	}
@@ -9,6 +17,12 @@ export default function RenderPosts({ elem }) {
 	return (
 		<>
 			<Box>
+				<DeleteModal
+					setIsOpen={setIsOpen}
+					modalIsOpen={modalIsOpen}
+					id={elem.id}
+					setControlApi={setControlApi}
+				/>
 				<BoxPictureAndLike>
 					<Picture src={elem.imageUrl} alt="avatar" />
 
@@ -17,6 +31,12 @@ export default function RenderPosts({ elem }) {
 					</Likes>
 				</BoxPictureAndLike>
 				<BoxPostTexts>
+					<Delete
+						display={
+							elem.email === deserializationData.email ? "true" : "false"
+						}
+						onClick={() => setIsOpen(true)}
+					/>
 					<User>{elem.username}</User>
 					<TextPost>{elem.text}</TextPost>
 					<LinkContainer onClick={() => openLink(elem.url)}>
@@ -70,6 +90,7 @@ const BoxPostTexts = styled.div`
 	padding: 20px;
 	width: 80%;
 	height: 100%;
+	position: relative;
 
 	@media (max-width: 700px) {
 		padding: 10px;
@@ -114,6 +135,7 @@ const LinkContainer = styled.div`
 	height: 100%;
 	border: 1px solid #4d4d4d;
 	border-radius: 11px;
+	cursor: pointer;
 
 	@media (max-width: 700px) {
 		width: 80%;
@@ -135,6 +157,7 @@ const LinkImage = styled.img`
 
 	@media (max-width: 700px) {
 		width: 40%;
+		object-fit: cover;
 	}
 `;
 
@@ -162,4 +185,12 @@ const Link = styled.p`
 	font-size: 11px;
 	color: #cecece;
 	word-wrap: break-word;
+`;
+
+const Delete = styled(MdDelete)`
+	display: ${(props) => (props.display === "true" ? null : "none")};
+	color: white;
+	position: absolute;
+	top: 15px;
+	right: 15px;
 `;

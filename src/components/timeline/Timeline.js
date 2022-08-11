@@ -52,7 +52,9 @@ export default function Timeline() {
 			) : !postsData.length ? (
 				<NoPostsYet>There are no posts yet</NoPostsYet>
 			) : (
-				postsData.map((elem, index) => <RenderPosts key={index} elem={elem} />)
+				postsData.map((elem, index) => (
+					<RenderPosts key={index} elem={elem} setControlApi={setControlApi} />
+				))
 			)}
 		</Feed>
 	);
