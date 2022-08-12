@@ -12,12 +12,13 @@ export default function PostInterface({ setControlApi }) {
 		url: "",
 		text: "",
 	});
+		
 
 	function handleForm(e) {
 		setPost({
 			...post,
 			[e.target.name]: e.target.value,
-		});
+		});		
 	}
 
 	function submitForm(e) {
@@ -27,9 +28,8 @@ export default function PostInterface({ setControlApi }) {
 
 		const body = {
 			...post,
-		};
-
-		hashtag(post.text)
+		};		
+		
 
 		const header = {
 			headers: {
@@ -52,15 +52,7 @@ export default function PostInterface({ setControlApi }) {
 			.finally(() => {
 				setIsActive(true);
 			});
-	}
-
-	function hashtag(str){
-		const hashtag = str.match(/#\w+/g);
-		  if(hashtag){			
-			const hashtags = hashtag.map(hashtag => hashtag.slice(1));
-			console.log (hashtags)
-		  }		  
-		  return [];
+			
 	}
 
 	return (

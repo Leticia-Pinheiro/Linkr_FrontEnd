@@ -9,9 +9,7 @@ export default function Hashtag(){
         <Container>
             <Feed></Feed>
             <Title># {hashtag}</Title>
-        </Container>
-        
-        
+        </Container>       
         
     )
 }
