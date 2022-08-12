@@ -14,6 +14,7 @@ export default function PostsFromUser() {
 	const navigate = useNavigate();
 	let { id } = useParams();
 	const { userInformation } = useContext(UserContext);
+	const [controlLoading, setControlLoading] = useState(true);
 
 	const config = {
 		headers: {
@@ -26,27 +27,36 @@ export default function PostsFromUser() {
 			.get(`${urls.getPosts}/${id}`, config)
 			.then((response) => {
 				setUserPosts(response.data);
+				setControlLoading(false);
 			})
 			.catch((err) => {
 				if (err.response.status === 404) {
 					alert("Usuário não encontrado!");
 					navigate("/timeline");
+					setControlLoading(false);
 				} else {
 					alert(err.response.data);
+					setControlLoading(false);
 				}
 			});
 	}, []);
 
 	return (
 		<Feed>
-			{!userPosts.length ? (
+			{controlLoading ? (
 				<FeedLoading />
 			) : (
 				<>
-					<Title>{userPosts[0].username}'s posts</Title>
-					{userPosts.map((elem, index) => (
-						<RenderPosts key={index} elem={elem} />
-					))}
+					{!userPosts.length ? null : (
+						<Title>{userPosts[0].username}'s posts</Title>
+					)}
+					{!userPosts.length ? (
+						<NoPostsYet>User hasn't posted yet</NoPostsYet>
+					) : (
+						userPosts.map((elem, index) => (
+							<RenderPosts key={index} elem={elem} />
+						))
+					)}
 				</>
 			)}
 		</Feed>
@@ -63,4 +73,12 @@ const Title = styled.p`
 	@media (max-width: 700px) {
 		margin-left: 20px;
 	}
+`;
+
+const NoPostsYet = styled.p`
+	font-family: "Oswald";
+	font-weight: bold;
+	font-size: 20px;
+	color: #ffffff;
+	text-align: center;
 `;
