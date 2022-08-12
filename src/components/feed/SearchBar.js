@@ -114,12 +114,14 @@ const BoxUser = styled.div`
 	display: flex;
 	align-items: center;
 	padding: 5px;
+	height: 50px;
 	cursor: pointer;
 	border-radius: 0 0 8px 8px;
 `;
 
 const BoxAvatar = styled.img`
 	width: 40px;
+	height: 40px;
 	border-radius: 50px;
 `;
 
