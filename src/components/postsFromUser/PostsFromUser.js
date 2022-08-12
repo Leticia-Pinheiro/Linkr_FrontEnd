@@ -1,21 +1,29 @@
 import axios from "axios";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import urls from "../shared/urls";
 import Feed from "../feed/Feed";
 import RenderPosts from "../timeline/RenderPosts";
 import FeedLoading from "../shared/FeedLoading";
+import UserContext from "../context/UserContext";
 
 export default function PostsFromUser() {
 	const [userPosts, setUserPosts] = useState([]);
 	const navigate = useNavigate();
 	let { id } = useParams();
+	const { userInformation } = useContext(UserContext);
+
+	const config = {
+		headers: {
+			Authorization: `Bearer ${userInformation.token}`,
+		},
+	};
 
 	useEffect(() => {
 		axios
-			.get(`${urls.getPosts}/${id}`)
+			.get(`${urls.getPosts}/${id}`, config)
 			.then((response) => {
 				setUserPosts(response.data);
 			})
