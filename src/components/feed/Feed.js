@@ -76,6 +76,7 @@ const OuterLogout = styled.div`
 	display: flex;
 	align-items: center;
 `;
+
 const InnerLogout = styled.div`
 	width: 53px;
 	height: 53px;
@@ -128,6 +129,7 @@ const Logout = styled.div`
 	background: #171717;
 	border-radius: 0px 0px 0px 20px;
 	position: fixed;
+	top: 72px;
 	right: 0;
 	cursor: pointer;
 
