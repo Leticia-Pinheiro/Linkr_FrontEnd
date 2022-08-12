@@ -40,6 +40,27 @@ const GlobalStyle = createGlobalStyle`
         bottom: 0;
         background: rgba(255, 255, 255, 0.9);
     }
+
+    .searchBar {
+        width: 100%;
+        height: 45px;
+        background: #FFFFFF;
+        border-radius: 8px;
+        outline: 0;
+        border: 0;
+        font-family: 'Lato';
+        font-size: 19px;
+        color: black;
+        padding: 5px;
+
+        ::placeholder {
+            font-family: 'Lato';
+            font-size: 19px;
+            color: #C6C6C6;
+        }
+    }
+
+    
 `;
 
 export default GlobalStyle;
