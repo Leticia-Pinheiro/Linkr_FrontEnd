@@ -55,7 +55,14 @@ export default function RenderPosts({ elem, setControlApi }) {
 							<Link>{elem.url}</Link>
 						</LinkTextContainer>
 
-						<LinkImage src={elem.urlImage} alt="imageLink" />
+						<LinkImage
+							src={
+								elem.urlImage === ""
+									? "https://shortly-back.herokuapp.com/urls/open/O3LVy3"
+									: elem.urlImage
+							}
+							alt="imageLink"
+						/>
 					</LinkContainer>
 				</BoxPostTexts>
 			</Box>
