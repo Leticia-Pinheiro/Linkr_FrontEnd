@@ -47,14 +47,14 @@ export default function PostsFromUser() {
 				<FeedLoading />
 			) : (
 				<>
+					{!userPosts.length ? null : (
+						<Title>{userPosts[0].username}'s posts</Title>
+					)}
 					{!userPosts.length ? (
 						<NoPostsYet>User hasn't posted yet</NoPostsYet>
 					) : (
 						userPosts.map((elem, index) => (
-							<>
-								<Title>{userPosts[0].username}'s posts</Title>
-								<RenderPosts key={index} elem={elem} />
-							</>
+							<RenderPosts key={index} elem={elem} />
 						))
 					)}
 				</>
