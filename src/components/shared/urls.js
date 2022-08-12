@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://app-linkr.herokuapp.com";
 
 const urls = {
 	signup: `${BASE_URL}/signup`,
