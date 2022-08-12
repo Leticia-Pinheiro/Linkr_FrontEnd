@@ -32,10 +32,10 @@ export default function PostInterface({ setControlApi }) {
 		
 
 		const header = {
-			headers: {
-				Authorization: `Bearer ${userInformation.token}`,
-			},
-		};
+            headers: {
+                Authorization: `Bearer ${userInformation.token}`
+            }
+        };
 
 		const promise = axios.post(urls.timeline, body, header);
 		promise

@@ -1,10 +1,17 @@
 import styled from "styled-components";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import  {  ReactTagify  }  from  "react-tagify"
+import DeleteModal from "./DeleteModal";
+import { MdDelete } from "react-icons/md";
+import Like from "./Like";
 
-export default function RenderPosts({ elem }) {
-	const navigate = useNavigate()
-	
+export default function RenderPosts({ elem, setControlApi }) {
+	const [modalIsOpen, setIsOpen] = useState(false);
+	let loginStoraged = localStorage.getItem("login");
+	let deserializationData = JSON.parse(loginStoraged);
+	const navigate = useNavigate();
+
 	function openLink(url) {
 		window.open(url);
 	}
@@ -14,25 +21,46 @@ export default function RenderPosts({ elem }) {
 		cursor : 'pointer' 
 	  } ;
 	  
-	function tagPage(tag){
+	function goToTagPosts(tag){
 		const hashtag = tag.slice(1);
 		navigate(`/hashtag/${hashtag}`)
+	}	
+
+	function goToUserPosts(id) {
+		navigate(`/user/${id}`);
 	}
 
 	return (
 		<>
 			<Box>
+				<DeleteModal
+					setIsOpen={setIsOpen}
+					modalIsOpen={modalIsOpen}
+					id={elem.id}
+					setControlApi={setControlApi}
+				/>
 				<BoxPictureAndLike>
 					<Picture src={elem.imageUrl} alt="avatar" />
 
-					<Likes></Likes>
+					<Likes>
+						<Like postId={elem.id} liked={elem.liked} />
+					</Likes>
 				</BoxPictureAndLike>
 				<BoxPostTexts>
-					<User>{elem.username}</User>
+
+					<Delete
+						display={
+							elem.email === deserializationData.email ? "true" : "false"
+						}
+						onClick={() => setIsOpen(true)}
+					/>
+					<User onClick={() => goToUserPosts(elem.userId)}>
+						{elem.username}
+					</User>
 
 					< ReactTagify  
 					tagStyle = { tagStyle }  
-					tagClicked = { ( tag ) => tagPage(tag)}
+					tagClicked = { ( tag ) => goToTagPosts(tag)}
 					> 
 						<TextPost>{elem.text}</TextPost>
 					</ReactTagify>
@@ -88,6 +116,7 @@ const BoxPostTexts = styled.div`
 	padding: 20px;
 	width: 80%;
 	height: 100%;
+	position: relative;
 
 	@media (max-width: 700px) {
 		padding: 10px;
@@ -115,6 +144,7 @@ const User = styled.p`
 	font-weight: 400;
 	font-size: 19px;
 	color: #ffffff;
+	cursor: pointer;
 `;
 
 const TextPost = styled.p`
@@ -132,6 +162,7 @@ const LinkContainer = styled.div`
 	height: 100%;
 	border: 1px solid #4d4d4d;
 	border-radius: 11px;
+	cursor: pointer;
 
 	@media (max-width: 700px) {
 		width: 80%;
@@ -153,6 +184,7 @@ const LinkImage = styled.img`
 
 	@media (max-width: 700px) {
 		width: 40%;
+		object-fit: cover;
 	}
 `;
 
@@ -180,4 +212,12 @@ const Link = styled.p`
 	font-size: 11px;
 	color: #cecece;
 	word-wrap: break-word;
+`;
+
+const Delete = styled(MdDelete)`
+	display: ${(props) => (props.display === "true" ? null : "none")};
+	color: white;
+	position: absolute;
+	top: 15px;
+	right: 15px;
 `;

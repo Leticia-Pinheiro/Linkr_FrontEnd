@@ -2,7 +2,9 @@ import styled from "styled-components";
 import { useState, useContext, useInsertionEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+
 import UserContext from "../context/UserContext.js";
+import SearchBar from "./SearchBar.js";
 
 export default function Feed(props) {
 	const [showLogout, setShowLogout] = useState(false);
@@ -21,29 +23,24 @@ export default function Feed(props) {
 
 	return (
 		<>
-			<Container>
-				<Header>
-					<h1>linkr</h1>
+			<Header>
+				<h1>linkr</h1>
 
-					<div onClick={showOrHide}>
-						{showLogout ? <ArrowUp /> : <ArrowDown />}
+				<OuterLogout onClick={showOrHide}>
+					{showLogout ? <ArrowUp /> : <ArrowDown />}
 
-						<img src = {userInformation.image} alt = "user_image" />
-					</div>
-				</Header>
+					<InnerLogout></InnerLogout>
+				</OuterLogout>
+			</Header>
 
-				{showLogout ? <Logout onClick={toLogin}>Logout</Logout> : null}
-			</Container>
+			<SearchBar />
+
+			{showLogout ? <Logout onClick={toLogin}>Logout</Logout> : null}
+
 			<Body>{props.children}</Body>
 		</>
 	);
 }
-
-const Container = styled.div`
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-`;
 
 const Header = styled.div`
 	width: 100%;
@@ -54,6 +51,10 @@ const Header = styled.div`
 	justify-content: space-between;
 	position: fixed;
 	top: 0;
+
+	z-index: 1;
+
+
 	h1 {
 		font-size: 49px;
 		font-weight: bold;
@@ -65,6 +66,7 @@ const Header = styled.div`
 			margin-left: 17px;
 		}
 	}
+
 	div {
 		display: flex;
 		align-items: center;
@@ -81,6 +83,32 @@ const Header = styled.div`
 				margin-right: 14px;
 			}
 		}
+
+
+	@media (max-width: 700px) {
+		position: fixed;
+		top: 0;
+	}
+`;
+
+const OuterLogout = styled.div`
+	display: flex;
+	align-items: center;
+`;
+
+const InnerLogout = styled.div`
+	width: 53px;
+	height: 53px;
+	border-radius: 50%;
+	background-color: #ffffff;
+	margin-right: 17px;
+	cursor: pointer;
+
+	@media (max-width: 700px) {
+		width: 44px;
+		height: 44px;
+		margin-right: 14px;
+
 	}
 `;
 
@@ -112,7 +140,6 @@ const Logout = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin-top: 72px;
 	font-family: "Lato";
 	font-size: 17px;
 	font-weight: bold;
@@ -120,6 +147,7 @@ const Logout = styled.div`
 	background: #171717;
 	border-radius: 0px 0px 0px 20px;
 	position: fixed;
+	top: 72px;
 	right: 0;
 	cursor: pointer;
 	@media (max-width: 700px) {
@@ -131,9 +159,11 @@ const Logout = styled.div`
 const Body = styled.div`
 	height: 100%;
 	width: 45%;
-	margin: 150px auto 0 auto;
+	margin: 80px auto 0 auto;
+
+
 	@media (max-width: 700px) {
 		width: 100%;
-		margin-top: 120px;
+		margin-top: 140px;
 	}
 `;
