@@ -15,7 +15,7 @@ export default function RenderPosts({ elem, setControlApi }) {
 	function openLink(url) {
 		window.open(url);
 	}
-
+	
 	function goToUserPosts(id) {
 		navigate(`/user/${id}`);
 	}
@@ -33,7 +33,13 @@ export default function RenderPosts({ elem, setControlApi }) {
 					<Picture src={elem.imageUrl} alt="avatar" />
 
 					<Likes>
-						<Like postId={elem.id} liked={elem.liked} />
+						<Like 
+							postId={elem.id} 
+							liked={elem.liked} 
+							likes={elem.likes}
+							whoLike={elem.whoLike}
+							setControlApi={setControlApi}
+						/>
 					</Likes>
 				</BoxPictureAndLike>
 				<BoxPostTexts>
