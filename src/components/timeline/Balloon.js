@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components"
 
 export default function Balloon ({ whoLiked }) {
@@ -12,12 +11,11 @@ export default function Balloon ({ whoLiked }) {
                         {whoLiked?.length === 1 ? `${whoLiked[0]}` : null}
                         {whoLiked?.length === 2 ? `${whoLiked[0]} and ${whoLiked[1]}` : null}
                         {whoLiked?.length === 3 ? `${whoLiked[0]}, ${whoLiked[1]} and ${whoLiked[2]}` : null}
-                        {whoLiked?.length === 4 ? `${whoLiked[0]}, ${whoLiked[1]} and other ${whoLiked.length - 2} peoples` : null}
+                        {whoLiked?.length >= 4 ? `${whoLiked[0]}, ${whoLiked[1]} and other ${whoLiked.length - 2} peoples` : null}
                     </Retangle>
                 </Container>
             ) : null}
         </>
-        
     )
 }
 

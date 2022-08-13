@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import styled from "styled-components";
 import urls from "../shared/urls.js";
@@ -8,13 +8,12 @@ import UserContext from "../context/UserContext";
 export default function Like ({ postId, liked, likes, setControlApi }) {
     
     const {userInformation} = useContext(UserContext);
-    const [isLiked, setIsLiked] = useState(liked); 
-
+    
     function toggleLike () {
 
         const body = {
 			postId,
-			postStatus: !isLiked
+			postStatus: !liked
 		};
 
 		const header = {
@@ -24,15 +23,13 @@ export default function Like ({ postId, liked, likes, setControlApi }) {
         };
         
         axios.put(urls.like, body, header).then( () => {
-            setIsLiked(!isLiked);
             setControlApi(true);
         })
-        
     }
 
     return (
         <Container>
-            {isLiked ? <Liked onClick={toggleLike}/> : <NotLiked onClick={toggleLike}/>}
+            {liked ? <Liked onClick={toggleLike}/> : <NotLiked onClick={toggleLike}/>}
             <LikesCount>{likes}{likes > 1 ? " likes" : " like"}</LikesCount>
         </ Container>
     )
