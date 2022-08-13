@@ -5,9 +5,11 @@ import { useNavigate } from "react-router-dom";
 import DeleteModal from "./DeleteModal";
 import { MdDelete } from "react-icons/md";
 import Like from "./Like";
+import Balloon from "./Balloon";
 
 export default function RenderPosts({ elem, setControlApi }) {
 	const [modalIsOpen, setIsOpen] = useState(false);
+	const [isVisible, setIsVisible] = useState(false);
 	let loginStoraged = localStorage.getItem("login");
 	let deserializationData = JSON.parse(loginStoraged);
 	const navigate = useNavigate();
@@ -15,9 +17,17 @@ export default function RenderPosts({ elem, setControlApi }) {
 	function openLink(url) {
 		window.open(url);
 	}
-
+	
 	function goToUserPosts(id) {
 		navigate(`/user/${id}`);
+	}
+
+	function handleMouseOver () {
+		setIsVisible(true);
+	}
+
+	function handleMouseOut () {
+		setIsVisible(false);
 	}
 
 	return (
@@ -32,8 +42,18 @@ export default function RenderPosts({ elem, setControlApi }) {
 				<BoxPictureAndLike>
 					<Picture src={elem.imageUrl} alt="avatar" />
 
-					<Likes>
-						<Like postId={elem.id} liked={elem.liked} />
+					<Likes onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+						<Like 
+							postId={elem.id} 
+							liked={elem.liked} 
+							likes={elem.likes}
+							setControlApi={setControlApi}
+						/>
+						{isVisible ? (
+							<Balloon 
+								whoLiked={elem.whoLiked}
+							/>
+						) : null}
 					</Likes>
 				</BoxPictureAndLike>
 				<BoxPostTexts>
@@ -126,7 +146,10 @@ const Picture = styled.img`
 
 //likes
 const Likes = styled.div`
+	display: flex;
+	justify-content: center;
 	margin: 25px 0 0 0;
+	position: relative;
 `;
 
 const User = styled.p`

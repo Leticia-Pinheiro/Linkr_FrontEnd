@@ -45,7 +45,7 @@ export default function PostInterface({ setControlApi }) {
 				setControlApi(true);
 			})
 			.catch(() => {
-				alert("Houve um erro ao publicar seu link!");
+				alert('There was an error posting your link!');
 			})
 			.finally(() => {
 				setIsActive(true);
@@ -118,7 +118,7 @@ const InputContainer = styled.div`
 	flex-direction: column;
 	width: 500px;
 
-	margin-left: auto;
+	margin-left: 15px;
 `;
 
 const UrlInput = styled.input`

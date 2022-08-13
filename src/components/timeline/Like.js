@@ -5,7 +5,7 @@ import styled from "styled-components";
 import urls from "../shared/urls.js";
 import UserContext from "../context/UserContext";
 
-export default function Like ({ postId, liked }) {
+export default function Like ({ postId, liked, likes, setControlApi }) {
     
     const {userInformation} = useContext(UserContext);
     const [isLiked, setIsLiked] = useState(liked); 
@@ -25,6 +25,7 @@ export default function Like ({ postId, liked }) {
         
         axios.put(urls.like, body, header).then( () => {
             setIsLiked(!isLiked);
+            setControlApi(true);
         })
         
     }
@@ -32,7 +33,7 @@ export default function Like ({ postId, liked }) {
     return (
         <Container>
             {isLiked ? <Liked onClick={toggleLike}/> : <NotLiked onClick={toggleLike}/>}
-            <LikesCount>Like</LikesCount>
+            <LikesCount>{likes}{likes > 1 ? " likes" : " like"}</LikesCount>
         </ Container>
     )
 }
