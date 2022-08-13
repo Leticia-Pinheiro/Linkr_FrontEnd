@@ -28,8 +28,8 @@ export default function Feed(props) {
 
 				<OuterLogout onClick={showOrHide}>
 					{showLogout ? <ArrowUp /> : <ArrowDown />}
-
-					<InnerLogout></InnerLogout>
+					<img src = {userInformation.image} alt = "avatar" />
+					{/* <InnerLogout></InnerLogout> */}
 				</OuterLogout>
 			</Header>
 
@@ -70,20 +70,6 @@ const Header = styled.div`
 	div {
 		display: flex;
 		align-items: center;
-		img {
-			width: 53px;
-			height: 53px;
-			border-radius: 50%;
-			
-			margin-right: 17px;
-			cursor: pointer;
-			@media (max-width: 700px) {
-				width: 44px;
-				height: 44px;
-				margin-right: 14px;
-			}
-		}
-
 
 	@media (max-width: 700px) {
 		position: fixed;
@@ -94,23 +80,23 @@ const Header = styled.div`
 const OuterLogout = styled.div`
 	display: flex;
 	align-items: center;
-`;
 
-const InnerLogout = styled.div`
-	width: 53px;
-	height: 53px;
-	border-radius: 50%;
-	background-color: #ffffff;
-	margin-right: 17px;
-	cursor: pointer;
-
-	@media (max-width: 700px) {
-		width: 44px;
-		height: 44px;
-		margin-right: 14px;
-
+	img {
+		width: 53px;
+		height: 53px;
+		border-radius: 50%;
+		
+		margin-right: 17px;
+		cursor: pointer;
+		@media (max-width: 700px) {
+			width: 44px;
+			height: 44px;
+			margin-right: 14px;
+		}
 	}
 `;
+
+
 
 const ArrowDown = styled(IoIosArrowDown)`
 	color: #ffffff;
