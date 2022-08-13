@@ -8,6 +8,7 @@ const urls = {
 	delete: `${BASE_URL}/posts`,
 	like: `${BASE_URL}/like`,
 	getUsers: `${BASE_URL}/users`,
+	updatePost: `${BASE_URL}/posts`,
 };
 
 export default urls;
