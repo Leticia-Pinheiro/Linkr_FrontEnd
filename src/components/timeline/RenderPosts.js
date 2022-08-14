@@ -7,7 +7,11 @@ import { MdDelete } from "react-icons/md";
 import Like from "./Like";
 import Balloon from "./Balloon";
 
-export default function RenderPosts({ elem, setControlApi }) {
+export default function RenderPosts({
+	elem,
+	setControlApi,
+	setControlApiUser,
+}) {
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [isVisible, setIsVisible] = useState(false);
 	let loginStoraged = localStorage.getItem("login");
@@ -17,16 +21,16 @@ export default function RenderPosts({ elem, setControlApi }) {
 	function openLink(url) {
 		window.open(url);
 	}
-	
+
 	function goToUserPosts(id) {
 		navigate(`/user/${id}`);
 	}
 
-	function handleMouseOver () {
+	function handleMouseOver() {
 		setIsVisible(true);
 	}
 
-	function handleMouseOut () {
+	function handleMouseOut() {
 		setIsVisible(false);
 	}
 
@@ -43,17 +47,14 @@ export default function RenderPosts({ elem, setControlApi }) {
 					<Picture src={elem.imageUrl} alt="avatar" />
 
 					<Likes onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-						<Like 
-							postId={elem.id} 
-							liked={elem.liked} 
+						<Like
+							postId={elem.id}
+							liked={elem.liked}
 							likes={elem.likes}
 							setControlApi={setControlApi}
+							setControlApiUser={setControlApiUser}
 						/>
-						{isVisible ? (
-							<Balloon 
-								whoLiked={elem.whoLiked}
-							/>
-						) : null}
+						{isVisible ? <Balloon whoLiked={elem.whoLiked} /> : null}
 					</Likes>
 				</BoxPictureAndLike>
 				<BoxPostTexts>
