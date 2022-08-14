@@ -8,6 +8,7 @@ import Feed from "../feed/Feed";
 import RenderPosts from "../timeline/RenderPosts";
 import FeedLoading from "../shared/FeedLoading";
 import UserContext from "../context/UserContext";
+import HashtagBox from "../timeline/HashtagBox";
 
 export default function PostsFromHashtag() {
 	const { hashtag } = useParams() 
@@ -50,13 +51,20 @@ export default function PostsFromHashtag() {
 					{!TagPosts.length ? null : (
 						<Title># {hashtag}</Title>
 					)}
-					{!TagPosts.length ? (
-						<NoPostsYet>No posts yet!</NoPostsYet>
-					) : (
-						TagPosts.map((elem, index) => (
-							<RenderPosts key={index} elem={elem} />
-						))
-					)}
+
+					<Container>
+						<ContainerTimeline>
+							{!TagPosts.length ? (
+								<NoPostsYet>No posts yet!</NoPostsYet>
+							) : (
+								TagPosts.map((elem, index) => (
+									<RenderPosts key={index} elem={elem} />
+								))
+							)}
+						</ContainerTimeline>
+						<HashtagBox/>
+					</Container>
+					
 				</>
 			)}
 		</Feed>
@@ -82,3 +90,10 @@ const NoPostsYet = styled.p`
 	color: #ffffff;
 	text-align: center;
 `;
+
+const Container = styled.div`
+	display: flex;`
+
+const ContainerTimeline = styled.div`
+	display: flex;
+	flex-direction: column;`

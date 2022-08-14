@@ -8,6 +8,7 @@ import Feed from "../feed/Feed";
 import RenderPosts from "../timeline/RenderPosts";
 import FeedLoading from "../shared/FeedLoading";
 import UserContext from "../context/UserContext";
+import HashtagBox from "../timeline/HashtagBox";
 
 export default function PostsFromUser() {
 	const [userPosts, setUserPosts] = useState([]);
@@ -43,6 +44,7 @@ export default function PostsFromUser() {
 
 	return (
 		<Feed>
+
 			{controlLoading ? (
 				<FeedLoading />
 			) : (
@@ -50,13 +52,19 @@ export default function PostsFromUser() {
 					{!userPosts.length ? null : (
 						<Title>{userPosts[0].username}'s posts</Title>
 					)}
-					{!userPosts.length ? (
-						<NoPostsYet>User hasn't posted yet</NoPostsYet>
-					) : (
-						userPosts.map((elem, index) => (
-							<RenderPosts key={index} elem={elem} />
-						))
-					)}
+
+					<Container>
+						<ContainerTimeline>					
+							{!userPosts.length ? (
+								<NoPostsYet>User hasn't posted yet</NoPostsYet>
+							) : (
+								userPosts.map((elem, index) => (
+									<RenderPosts key={index} elem={elem} />
+								))
+							)}
+						</ContainerTimeline>
+						<HashtagBox />
+					</Container>
 				</>
 			)}
 		</Feed>
@@ -82,3 +90,10 @@ const NoPostsYet = styled.p`
 	color: #ffffff;
 	text-align: center;
 `;
+
+const Container = styled.div`
+	display: flex;`
+
+const ContainerTimeline = styled.div`
+	display: flex;
+	flex-direction: column;`

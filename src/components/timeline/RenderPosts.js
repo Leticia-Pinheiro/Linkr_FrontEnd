@@ -89,12 +89,12 @@ export default function RenderPosts({ elem, setControlApi }) {
 
 const Box = styled.div`
 	display: flex;
-	width: 100%;
-	height: 100%;
+	width: 611px;
+	height: 276px;
 	border-radius: 16px;
 	padding: 5px;
 	background-color: black;
-	margin: 0 0 20px 0;
+	margin-bottom: 20px;
 
 	:last-child {
 		margin-bottom: 0;
@@ -103,6 +103,7 @@ const Box = styled.div`
 	@media (max-width: 700px) {
 		border-radius: 0;
 		margin: 0 0 15px 0;
+		width: 100%;
 	}
 `;
 

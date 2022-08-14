@@ -91,14 +91,15 @@ const Form = styled.form`
 
 const Container = styled.div`
 	display: flex;
-	width: 100%;
+	width: 611px;
 	height: 210px;
 	padding: 20px;
 	background-color: #fff;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 16px;
-	margin: 40px 0 30px 0;
+	margin-bottom: 30px;
 	@media (max-width: 700px) {
+		width: 100%;
 		border-radius: 0;
 	}
 `;
