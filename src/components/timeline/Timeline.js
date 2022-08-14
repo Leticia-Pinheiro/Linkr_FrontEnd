@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import UserContext from "../context/UserContext";
 import axios from "axios";
 
@@ -11,13 +11,13 @@ import PostInterface from "./PostInterface";
 import ControlApiContext from "../context/ControlApiContext";
 
 export default function Timeline() {
-	const [postsData, setPostsData] = useState("error");
+	const [postsData, setPostsData] = useState("");
 	const [controlLoading, setControlLoading] = useState(true);
 	const { userInformation } = useContext(UserContext);
 	const { setControlApi, controlApi, setControlApiUser } =
 		useContext(ControlApiContext);
 
-	if (controlApi) {
+	useEffect(() => {
 		const header = {
 			headers: {
 				Authorization: `Bearer ${userInformation.token}`,
@@ -27,16 +27,16 @@ export default function Timeline() {
 		axios
 			.get(urls.getPosts, header)
 			.then((response) => {
-				setControlApi(false);
 				setControlLoading(false);
 				setPostsData(response.data);
+				setControlApi(false);
 			})
 			.catch((err) => {
 				setControlLoading(false);
 				setPostsData("error");
 				setControlApi(false);
 			});
-	}
+	}, [controlApi]);
 
 	return (
 		<Feed>
