@@ -1,11 +1,23 @@
 import styled from "styled-components";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import UserContext from "../context/UserContext";
 import axios from "axios";
 import urls from "../shared/urls";
 
 
-export default function EditPost ({postId, text, isEditable, setIsEditable, editableText, setEditableText, isDisabled, setIsDisabled, setControlApi}) {
+export default function EditPost ({
+		postId, 
+		text, 
+		isEditable, 
+		setIsEditable, 
+		editableText, 
+		setEditableText, 
+		isDisabled, 
+		setIsDisabled, 
+		setControlApi,
+		setControlApiUser
+	}) {
+
 
 	const { userInformation } = useContext(UserContext);
     const inputRef = useRef();
@@ -30,16 +42,15 @@ export default function EditPost ({postId, text, isEditable, setIsEditable, edit
 					Authorization: `Bearer ${userInformation.token}`
 				}
 			};
-			console.log(postId)
+			
 			await axios.put(`${urls.updatePost}/${postId}`, bory, header)
 				.then( () => {
-					// setControlApi(true);
+					setControlApi(true);
+					setControlApiUser(true);
 					setIsEditable(false);
-					console.log(1)
 				})
 				.catch( () => {
 					alert('Could not update text!');
-					console.log(2)
 					setIsDisabled(false);
 				})
 		}

@@ -96,6 +96,7 @@ export default function RenderPosts({
 							isDisabled={isDisabled}
 							setIsDisabled={setIsDisabled}
 							setControlApi={setControlApi}
+							setControlApiUser={setControlApiUser}
 						/>
 					) : <TextPost>{elem.text}</TextPost>}
 					<LinkContainer onClick={() => openLink(elem.url)}>
