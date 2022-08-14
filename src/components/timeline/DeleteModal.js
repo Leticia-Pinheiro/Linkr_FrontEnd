@@ -6,6 +6,7 @@ import { useState, useContext } from "react";
 import urls from "../shared/urls";
 import DeleteLoading from "../shared/DeleteLoading";
 import UserContext from "../context/UserContext";
+import ControlApiContext from "../context/ControlApiContext";
 
 export default function DeleteModal({
 	setIsOpen,
@@ -16,6 +17,7 @@ export default function DeleteModal({
 	const [controlLoading, setControlLoading] = useState(false);
 
 	const { userInformation } = useContext(UserContext);
+	const { setControlApiUser } = useContext(ControlApiContext);
 
 	function closeModal() {
 		setIsOpen(false);
@@ -36,6 +38,7 @@ export default function DeleteModal({
 				setControlLoading(false);
 				setControlApi(true);
 				setIsOpen(false);
+				setControlApiUser(true);
 			})
 			.catch((err) => {
 				setControlLoading(false);
