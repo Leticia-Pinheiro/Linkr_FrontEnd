@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 import DeleteModal from "./DeleteModal";
 import { MdDelete } from "react-icons/md";
+import { FaPencilAlt } from "react-icons/fa";
 import Like from "./Like";
 import Balloon from "./Balloon";
+import EditPost from "./EditPost";
 
 export default function RenderPosts({
 	elem,
@@ -14,10 +16,13 @@ export default function RenderPosts({
 }) {
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [isVisible, setIsVisible] = useState(false);
+	const [isEditable, setIsEditable] = useState(false);
+	const [editableText, setEditableText] = useState(null);
+	const [isDisabled, setIsDisabled] = useState(true);
 	let loginStoraged = localStorage.getItem("login");
 	let deserializationData = JSON.parse(loginStoraged);
 	const navigate = useNavigate();
-
+	
 	function openLink(url) {
 		window.open(url);
 	}
@@ -32,6 +37,12 @@ export default function RenderPosts({
 
 	function handleMouseOut() {
 		setIsVisible(false);
+	}
+
+	function handleEditButton () {
+		setEditableText(elem.text);
+		setIsEditable(!isEditable);
+		setIsDisabled(false);
 	}
 
 	return (
@@ -64,11 +75,30 @@ export default function RenderPosts({
 						}
 						onClick={() => setIsOpen(true)}
 					/>
+					<Edit
+						display={
+							elem.email === deserializationData.email ? "true" : "false"
+						}
+						onClick={handleEditButton}
+					/>
 					<User onClick={() => goToUserPosts(elem.userId)}>
 						{elem.username}
 					</User>
 
-					<TextPost>{elem.text}</TextPost>
+					{isEditable ? (
+						<EditPost 
+							postId={elem.id}
+							text={elem.text}
+							isEditable={isEditable}
+							setIsEditable={setIsEditable}
+							editableText={editableText}
+							setEditableText={setEditableText}
+							isDisabled={isDisabled}
+							setIsDisabled={setIsDisabled}
+							setControlApi={setControlApi}
+							setControlApiUser={setControlApiUser}
+						/>
+					) : <TextPost>{elem.text}</TextPost>}
 					<LinkContainer onClick={() => openLink(elem.url)}>
 						<LinkTextContainer>
 							<LinkTitle>{elem.urlTitle}</LinkTitle>
@@ -154,6 +184,8 @@ const Likes = styled.div`
 `;
 
 const User = styled.p`
+	width: fit-content;
+	margin-right: auto;
 	font-family: "Lato";
 	font-weight: 400;
 	font-size: 19px;
@@ -234,4 +266,15 @@ const Delete = styled(MdDelete)`
 	position: absolute;
 	top: 15px;
 	right: 15px;
+	cursor: pointer;
+`;
+
+const Edit = styled(FaPencilAlt)`
+	display: ${(props) => (props.display === "true" ? null : "none")};
+	font-size: 12px;
+	color: white;
+	position: absolute;
+	top: 17px;
+	right: 37px;
+	cursor: pointer;
 `;
