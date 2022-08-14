@@ -16,8 +16,8 @@ export default function PostsFromUser() {
 	let { id } = useParams();
 	const { userInformation } = useContext(UserContext);
 	const [controlLoading, setControlLoading] = useState(true);
-	const [controlApiUser, setControlApiUser] = useState(true);
-	const { setControlApi } = useContext(ControlApiContext);
+	const { setControlApi, setControlApiUser, controlApiUser } =
+		useContext(ControlApiContext);
 
 	const config = {
 		headers: {
