@@ -8,6 +8,7 @@ import Feed from "../feed/Feed";
 import RenderPosts from "../timeline/RenderPosts";
 import FeedLoading from "../shared/FeedLoading";
 import UserContext from "../context/UserContext";
+import ControlApiContext from "../context/ControlApiContext";
 
 export default function PostsFromUser() {
 	const [userPosts, setUserPosts] = useState([]);
@@ -15,6 +16,8 @@ export default function PostsFromUser() {
 	let { id } = useParams();
 	const { userInformation } = useContext(UserContext);
 	const [controlLoading, setControlLoading] = useState(true);
+	const [controlApiUser, setControlApiUser] = useState(true);
+	const { setControlApi } = useContext(ControlApiContext);
 
 	const config = {
 		headers: {
@@ -28,6 +31,7 @@ export default function PostsFromUser() {
 			.then((response) => {
 				setUserPosts(response.data);
 				setControlLoading(false);
+				setControlApiUser(false);
 			})
 			.catch((err) => {
 				if (err.response.status === 404) {
@@ -39,7 +43,7 @@ export default function PostsFromUser() {
 					setControlLoading(false);
 				}
 			});
-	}, []);
+	}, [controlApiUser]);
 
 	return (
 		<Feed>
@@ -54,7 +58,12 @@ export default function PostsFromUser() {
 						<NoPostsYet>User hasn't posted yet</NoPostsYet>
 					) : (
 						userPosts.map((elem, index) => (
-							<RenderPosts key={index} elem={elem} />
+							<RenderPosts
+								key={index}
+								elem={elem}
+								setControlApiUser={setControlApiUser}
+								setControlApi={setControlApi}
+							/>
 						))
 					)}
 				</>

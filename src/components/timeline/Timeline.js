@@ -8,21 +8,22 @@ import RenderPosts from "./RenderPosts";
 import urls from "../shared/urls";
 import FeedLoading from "../shared/FeedLoading";
 import PostInterface from "./PostInterface";
+import ControlApiContext from "../context/ControlApiContext";
 
 export default function Timeline() {
 	const [postsData, setPostsData] = useState("error");
-	const [controlApi, setControlApi] = useState(true);
 	const [controlLoading, setControlLoading] = useState(true);
 	const { userInformation } = useContext(UserContext);
+	const { setControlApi, controlApi } = useContext(ControlApiContext);
 
 	if (controlApi) {
 		setControlApi(false);
 
 		const header = {
-            headers: {
-                Authorization: `Bearer ${userInformation.token}`
-            }
-        };
+			headers: {
+				Authorization: `Bearer ${userInformation.token}`,
+			},
+		};
 
 		axios
 			.get(urls.getPosts, header)
