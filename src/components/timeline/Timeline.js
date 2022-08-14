@@ -14,11 +14,10 @@ export default function Timeline() {
 	const [postsData, setPostsData] = useState("error");
 	const [controlLoading, setControlLoading] = useState(true);
 	const { userInformation } = useContext(UserContext);
-	const { setControlApi, controlApi } = useContext(ControlApiContext);
+	const { setControlApi, controlApi, setControlApiUser } =
+		useContext(ControlApiContext);
 
 	if (controlApi) {
-		setControlApi(false);
-
 		const header = {
 			headers: {
 				Authorization: `Bearer ${userInformation.token}`,
@@ -28,12 +27,14 @@ export default function Timeline() {
 		axios
 			.get(urls.getPosts, header)
 			.then((response) => {
+				setControlApi(false);
 				setControlLoading(false);
 				setPostsData(response.data);
 			})
 			.catch((err) => {
 				setControlLoading(false);
 				setPostsData("error");
+				setControlApi(false);
 			});
 	}
 
@@ -54,7 +55,12 @@ export default function Timeline() {
 				<NoPostsYet>There are no posts yet</NoPostsYet>
 			) : (
 				postsData.map((elem, index) => (
-					<RenderPosts key={index} elem={elem} setControlApi={setControlApi} />
+					<RenderPosts
+						key={index}
+						elem={elem}
+						setControlApi={setControlApi}
+						setControlApiUser={setControlApiUser}
+					/>
 				))
 			)}
 		</Feed>
