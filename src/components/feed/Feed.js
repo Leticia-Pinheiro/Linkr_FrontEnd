@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useContext, useInsertionEffect } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
@@ -28,8 +28,8 @@ export default function Feed(props) {
 
 				<OuterLogout onClick={showOrHide}>
 					{showLogout ? <ArrowUp /> : <ArrowDown />}
-					<img src = {userInformation.image} alt = "avatar" />
-					{/* <InnerLogout></InnerLogout> */}
+
+					<InnerLogout src = {userInformation.image} alt = "avatar"></InnerLogout>
 				</OuterLogout>
 			</Header>
 
@@ -51,10 +51,7 @@ const Header = styled.div`
 	justify-content: space-between;
 	position: fixed;
 	top: 0;
-
 	z-index: 1;
-
-
 	h1 {
 		font-size: 49px;
 		font-weight: bold;
@@ -66,11 +63,6 @@ const Header = styled.div`
 			margin-left: 17px;
 		}
 	}
-
-	div {
-		display: flex;
-		align-items: center;
-
 	@media (max-width: 700px) {
 		position: fixed;
 		top: 0;
@@ -80,23 +72,20 @@ const Header = styled.div`
 const OuterLogout = styled.div`
 	display: flex;
 	align-items: center;
-
-	img {
-		width: 53px;
-		height: 53px;
-		border-radius: 50%;
-		
-		margin-right: 17px;
-		cursor: pointer;
-		@media (max-width: 700px) {
-			width: 44px;
-			height: 44px;
-			margin-right: 14px;
-		}
-	}
 `;
 
-
+const InnerLogout = styled.img`
+	width: 53px;
+	height: 53px;
+	border-radius: 50%;	
+	margin-right: 17px;
+	cursor: pointer;
+	@media (max-width: 700px) {
+		width: 44px;
+		height: 44px;
+		margin-right: 14px;
+	}
+`;
 
 const ArrowDown = styled(IoIosArrowDown)`
 	color: #ffffff;
@@ -146,8 +135,6 @@ const Body = styled.div`
 	height: 100%;
 	width: 45%;
 	margin: 80px auto 0 auto;
-
-
 	@media (max-width: 700px) {
 		width: 100%;
 		margin-top: 140px;

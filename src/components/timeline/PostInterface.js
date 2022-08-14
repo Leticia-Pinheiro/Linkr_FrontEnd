@@ -12,13 +12,12 @@ export default function PostInterface({ setControlApi }) {
 		url: "",
 		text: "",
 	});
-		
 
 	function handleForm(e) {
 		setPost({
 			...post,
 			[e.target.name]: e.target.value,
-		});		
+		});
 	}
 
 	function submitForm(e) {
@@ -28,8 +27,7 @@ export default function PostInterface({ setControlApi }) {
 
 		const body = {
 			...post,
-		};		
-		
+		};
 
 		const header = {
             headers: {
@@ -47,7 +45,7 @@ export default function PostInterface({ setControlApi }) {
 				setControlApi(true);
 			})
 			.catch(() => {
-				alert("Houve um erro ao publicar seu link!");
+				alert('There was an error posting your link!');
 			})
 			.finally(() => {
 				setIsActive(true);
@@ -100,7 +98,6 @@ const Container = styled.div`
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 16px;
 	margin: 40px 0 30px 0;
-
 	@media (max-width: 700px) {
 		border-radius: 0;
 	}
@@ -111,7 +108,6 @@ const Title = styled.h2`
 	font-weight: 300;
 	font-size: 20px;
 	color: #707070;
-
 	margin-bottom: 10px;
 `;
 
@@ -119,25 +115,21 @@ const InputContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 500px;
-
-	margin-left: auto;
+	margin-left: 15px;
 `;
 
 const UrlInput = styled.input`
 	all: unset;
-
 	height: 30px;
 	padding-left: 10px;
 	margin-bottom: 5px;
 	background-color: ${(props) => (props.disabled ? "#D6D6D6" : "#EFEFEF")};
 	border-radius: 5px;
 	box-sizing: border-box;
-
 	font-family: "Lato";
 	font-weight: 300;
 	font-size: 15px;
 	color: #949494;
-
 	::placeholder {
 		font-family: "Lato";
 		font-weight: 300;
@@ -148,19 +140,16 @@ const UrlInput = styled.input`
 
 const TextInput = styled.textarea`
 	all: unset;
-
 	height: 66px;
 	padding: 10px;
 	margin-bottom: 5px;
 	background-color: ${(props) => (props.disabled ? "#D6D6D6" : "#EFEFEF")};
 	border-radius: 5px;
 	box-sizing: border-box;
-
 	font-family: "Lato";
 	font-weight: 300;
 	font-size: 15px;
 	color: #949494;
-
 	::placeholder {
 		font-family: "Lato";
 		font-weight: 300;

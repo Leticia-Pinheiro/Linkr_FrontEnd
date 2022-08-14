@@ -7,7 +7,8 @@ import Login from "./login/Login";
 import Signup from "./signup/Signup";
 import UserContext from "./context/UserContext";
 import Timeline from "./timeline/Timeline";
-import Hashtag from "./timeline/Hashtag.js"
+// import Hashtag from "./timeline/Hashtag.js"
+import PostsFromHashtag from "./postsFromHashtag/PostsFromHashtag.js"
 import PostsFromUser from "./postsFromUser/PostsFromUser";
 
 
@@ -33,7 +34,7 @@ export default function App() {
 						<Route path="/" element={<Login />} />
 						<Route path="/signup" element={<Signup />} />
 						<Route path="/timeline" element={<Timeline />} />
-						<Route path="/hashtag/:hashtag" element={<Hashtag />} />
+						<Route path="/hashtag/:hashtag" element={<PostsFromHashtag />} />
 						<Route path="/user/:id" element={<PostsFromUser />} />
 
 					</Routes>

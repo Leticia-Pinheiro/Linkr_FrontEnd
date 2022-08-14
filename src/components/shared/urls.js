@@ -1,5 +1,4 @@
-const BASE_URL = "http://localhost:5000";
-
+const BASE_URL = "http://localhost:5050";
 
 const urls = {
 	signup: `${BASE_URL}/signup`,
@@ -9,6 +8,7 @@ const urls = {
 	delete: `${BASE_URL}/posts`,
 	like: `${BASE_URL}/like`,
 	getUsers: `${BASE_URL}/users`,
+	getHashtag: `${BASE_URL}/hashtag`
 };
 
 export default urls;
