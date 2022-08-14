@@ -1,15 +1,13 @@
 import styled from "styled-components";
-import { useContext, useRef, useState } from "react";
-import UserContext from "../context/UserContext";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 import DeleteModal from "./DeleteModal";
 import { MdDelete } from "react-icons/md";
 import { FaPencilAlt } from "react-icons/fa";
 import Like from "./Like";
 import Balloon from "./Balloon";
-import urls from "../shared/urls";
+import EditPost from "./EditPost";
 
 export default function RenderPosts({ elem, setControlApi }) {
 	const [modalIsOpen, setIsOpen] = useState(false);
@@ -17,11 +15,9 @@ export default function RenderPosts({ elem, setControlApi }) {
 	const [isEditable, setIsEditable] = useState(false);
 	const [editableText, setEditableText] = useState(null);
 	const [isDisabled, setIsDisabled] = useState(true);
-	const { userInformation } = useContext(UserContext);
 	let loginStoraged = localStorage.getItem("login");
 	let deserializationData = JSON.parse(loginStoraged);
 	const navigate = useNavigate();
-	// const inputRef = useRef();
 	
 	function openLink(url) {
 		window.open(url);
@@ -39,32 +35,10 @@ export default function RenderPosts({ elem, setControlApi }) {
 		setIsVisible(false);
 	}
 
-	async function handleKeyDown (e) {
-		
-		if (e.keyCode === 27) {
-			setEditableText(elem.text);
-			setIsEditable(!isEditable);
-		}
-		if (e.keyCode === 13) {
-			setIsDisabled(true);
-			const bory = {
-				text: e.target.value
-			}
-			const header = {
-				headers: {
-					Authorization: `Bearer ${userInformation.token}`
-				}
-			};
-			await axios.put(`${urls.updatePost}/${elem.id}`, bory, header)
-				.then( () => {
-					setControlApi(true);
-					setIsEditable(false);
-				})
-				.catch( () => {
-					alert('Could not update text!');
-					setIsDisabled(false);
-				})
-		}
+	function handleEditButton () {
+		setEditableText(elem.text);
+		setIsEditable(!isEditable);
+		setIsDisabled(false);
 	}
 
 	return (
@@ -104,26 +78,23 @@ export default function RenderPosts({ elem, setControlApi }) {
 						display={
 							elem.email === deserializationData.email ? "true" : "false"
 						}
-						onClick={() => {
-							setEditableText(elem.text);
-							setIsEditable(!isEditable);
-							setIsDisabled(false);
-							// inputRef.current.focus();
-						}}
+						onClick={handleEditButton}
 					/>
 					<User onClick={() => goToUserPosts(elem.userId)}>
 						{elem.username}
 					</User>
 
 					{isEditable ? (
-						<TextInput
-							placeholder="Description..."
-							name="text"
-							value={editableText}
-							onChange={ (e) => setEditableText(e.target.value)}
-							disabled={isDisabled}
-							onKeyDown={handleKeyDown}
-							// ref={inputRef}
+						<EditPost 
+							postId={elem.id}
+							text={elem.text}
+							isEditable={isEditable}
+							setIsEditable={setIsEditable}
+							editableText={editableText}
+							setEditableText={setEditableText}
+							isDisabled={isDisabled}
+							setIsDisabled={setIsDisabled}
+							setControlApi={setControlApi}
 						/>
 					) : <TextPost>{elem.text}</TextPost>}
 					<LinkContainer onClick={() => openLink(elem.url)}>
@@ -304,27 +275,4 @@ const Edit = styled(FaPencilAlt)`
 	top: 17px;
 	right: 37px;
 	cursor: pointer;
-`;
-
-const TextInput = styled.input`
-	all: unset;
-
-	height: 30px;
-	padding: 10px;
-	margin: 5px 0;
-	background-color: ${(props) => (props.disabled ? "#D6D6D6" : "#EFEFEF")};
-	border-radius: 5px;
-	box-sizing: border-box;
-
-	font-family: "Lato";
-	font-weight: 300;
-	font-size: 15px;
-	color: #949494;
-
-	::placeholder {
-		font-family: "Lato";
-		font-weight: 300;
-		font-size: 15px;
-		color: #949494;
-	}
 `;
