@@ -16,13 +16,16 @@ export default function App() {
 		token: localStorage?.getItem("token"),
 	});
 	const [controlApi, setControlApi] = useState(true);
+	const [controlApiUser, setControlApiUser] = useState(true);
 
 	return (
 		<>
 			<GlobalResetStyle />
 			<GlobalStyle />
 
-			<ControlApiContext.Provider value={{ setControlApi, controlApi }}>
+			<ControlApiContext.Provider
+				value={{ setControlApi, controlApi, setControlApiUser, controlApiUser }}
+			>
 				<UserContext.Provider
 					value={{
 						setUserInformation,
