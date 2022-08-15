@@ -105,7 +105,6 @@ const Title = styled.h2`
     font-weight: 300;
     font-size: 20px;
     color: #707070;
-
     margin-bottom: 10px;
 `;
 
@@ -113,12 +112,10 @@ const InputContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 500px;
-
     margin-left: auto;
 `
 
 const UrlInput = styled.input`
-
     all: unset;
     
     height: 30px;
@@ -127,12 +124,10 @@ const UrlInput = styled.input`
     background-color: ${ props => props.disabled ? '#D6D6D6': '#EFEFEF'};
     border-radius: 5px;
     box-sizing: border-box;
-
     font-family: 'Lato';
     font-weight: 300;
     font-size: 15px;
     color: #949494;
-
     ::placeholder {
         font-family: 'Lato';
         font-weight: 300;
@@ -142,21 +137,17 @@ const UrlInput = styled.input`
 `;
 
 const TextInput = styled.textarea`
-
     all: unset;
-
     height: 66px;
     padding: 10px;
     margin-bottom: 5px;
     background-color: ${ props => props.disabled ? '#D6D6D6': '#EFEFEF'};
     border-radius: 5px;
     box-sizing: border-box;
-
     font-family: 'Lato';
     font-weight: 300;
     font-size: 15px;
     color: #949494;
-
     ::placeholder {
         font-family: 'Lato';
         font-weight: 300;

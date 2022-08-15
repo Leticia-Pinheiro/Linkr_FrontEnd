@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import  {  ReactTagify  }  from  "react-tagify"
 import DeleteModal from "./DeleteModal";
 import { MdDelete } from "react-icons/md";
 import { FaPencilAlt } from "react-icons/fa";
@@ -26,6 +26,17 @@ export default function RenderPosts({
 	function openLink(url) {
 		window.open(url);
 	}
+
+	const  tagStyle  =  { 		
+		fontWeight : 700 , 
+		cursor : 'pointer' 
+	  } ;
+	  
+	function goToTagPosts(tag){
+		const hashtag = tag.slice(1);
+		navigate(`/hashtag/${hashtag}`)
+		window.location.reload(false);
+	}	
 
 	function goToUserPosts(id) {
 		navigate(`/user/${id}`);
@@ -69,6 +80,7 @@ export default function RenderPosts({
 					</Likes>
 				</BoxPictureAndLike>
 				<BoxPostTexts>
+
 					<Delete
 						display={
 							elem.email === deserializationData.email ? "true" : "false"
@@ -99,8 +111,14 @@ export default function RenderPosts({
 							setControlApiUser={setControlApiUser}
 						/>
 					) : (
+
+					< ReactTagify  
+					tagStyle = { tagStyle }  
+					tagClicked = { ( tag ) => goToTagPosts(tag)}
+					> 
 						<TextPost>{elem.text}</TextPost>
-					)}
+					</ReactTagify>)}
+
 					<LinkContainer onClick={() => openLink(elem.url)}>
 						<LinkTextContainer>
 							<LinkTitle>{elem.urlTitle}</LinkTitle>
@@ -125,12 +143,12 @@ export default function RenderPosts({
 
 const Box = styled.div`
 	display: flex;
-	width: 100%;
-	height: 100%;
+	width: 611px;
+	height: 276px;
 	border-radius: 16px;
 	padding: 5px;
 	background-color: black;
-	margin: 0 0 20px 0;
+	margin-bottom: 20px;
 
 	:last-child {
 		margin-bottom: 0;
@@ -139,6 +157,7 @@ const Box = styled.div`
 	@media (max-width: 700px) {
 		border-radius: 0;
 		margin: 0 0 15px 0;
+		width: 100%;
 	}
 `;
 
@@ -181,6 +200,7 @@ const Likes = styled.div`
 	display: flex;
 	justify-content: center;
 	margin: 25px 0 0 0;
+	cursor: pointer;
 	position: relative;
 `;
 
