@@ -7,8 +7,10 @@ import Login from "./login/Login";
 import Signup from "./signup/Signup";
 import UserContext from "./context/UserContext";
 import Timeline from "./timeline/Timeline";
+import PostsFromHashtag from "./postsFromHashtag/PostsFromHashtag.js"
 import PostsFromUser from "./postsFromUser/PostsFromUser";
 import ControlApiContext from "./context/ControlApiContext";
+
 
 export default function App() {
 	const [userInformation, setUserInformation] = useState({
@@ -38,10 +40,12 @@ export default function App() {
 							<Route path="/signup" element={<Signup />} />
 							<Route path="/timeline" element={<Timeline />} />
 							<Route path="/user/:id" element={<PostsFromUser />} />
+							<Route path="/hashtag/:hashtag" element={<PostsFromHashtag />} />
 						</Routes>
 					</BrowserRouter>
-				</UserContext.Provider>
+				</UserContext.Provider>					
 			</ControlApiContext.Provider>
+
 		</>
 	);
 }

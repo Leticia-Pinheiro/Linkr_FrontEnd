@@ -9,7 +9,7 @@ import SearchBar from "./SearchBar.js";
 export default function Feed(props) {
 	const [showLogout, setShowLogout] = useState(false);
 	const navigate = useNavigate();
-	const { setUserInformation } = useContext(UserContext);
+	const { userInformation, setUserInformation } = useContext(UserContext);
 
 	function showOrHide() {
 		setShowLogout(!showLogout);
@@ -21,15 +21,19 @@ export default function Feed(props) {
 		setUserInformation(null);
 	}
 
+	function toTimeline() {		
+		navigate("/timeline");		
+	}
+
 	return (
 		<>
 			<Header>
-				<h1>linkr</h1>
+				<Title onClick = {toTimeline}>linkr</Title>
 
 				<OuterLogout onClick={showOrHide}>
 					{showLogout ? <ArrowUp /> : <ArrowDown />}
 
-					<InnerLogout></InnerLogout>
+					<InnerLogout src = {userInformation.image} alt = "avatar"></InnerLogout>
 				</OuterLogout>
 			</Header>
 
@@ -51,40 +55,37 @@ const Header = styled.div`
 	justify-content: space-between;
 	position: fixed;
 	top: 0;
-	z-index: 1;
-
-	h1 {
-		font-size: 49px;
-		font-weight: bold;
-		font-family: "Passion One", cursive;
-		color: #ffffff;
-		margin-left: 28px;
-
-		@media (max-width: 700px) {
-			font-size: 45px;
-			margin-left: 17px;
-		}
-	}
-
+	z-index: 1;	
 	@media (max-width: 700px) {
 		position: fixed;
 		top: 0;
 	}
 `;
 
+const Title = styled.div`
+	font-size: 49px;
+	font-weight: bold;
+	font-family: "Passion One", cursive;
+	color: #ffffff;
+	margin-left: 28px;
+	cursor: pointer;
+	@media (max-width: 700px) {
+		font-size: 45px;
+		margin-left: 17px;
+	}
+`
+
 const OuterLogout = styled.div`
 	display: flex;
 	align-items: center;
 `;
 
-const InnerLogout = styled.div`
+const InnerLogout = styled.img`
 	width: 53px;
 	height: 53px;
-	border-radius: 50%;
-	background-color: #ffffff;
+	border-radius: 50%;	
 	margin-right: 17px;
 	cursor: pointer;
-
 	@media (max-width: 700px) {
 		width: 44px;
 		height: 44px;
@@ -97,7 +98,6 @@ const ArrowDown = styled(IoIosArrowDown)`
 	font-size: 30px;
 	cursor: pointer;
 	margin-right: 17px;
-
 	@media (max-width: 700px) {
 		font-size: 25px;
 		margin-right: 12px;
@@ -109,7 +109,6 @@ const ArrowUp = styled(IoIosArrowUp)`
 	font-size: 30px;
 	cursor: pointer;
 	margin-right: 17px;
-
 	@media (max-width: 700px) {
 		font-size: 25px;
 		margin-right: 12px;
@@ -132,7 +131,6 @@ const Logout = styled.div`
 	top: 72px;
 	right: 0;
 	cursor: pointer;
-
 	@media (max-width: 700px) {
 		height: 43px;
 		font-size: 15px;
@@ -141,9 +139,8 @@ const Logout = styled.div`
 
 const Body = styled.div`
 	height: 100%;
-	width: 45%;
+	width: 70%;
 	margin: 80px auto 0 auto;
-
 	@media (max-width: 700px) {
 		width: 100%;
 		margin-top: 140px;

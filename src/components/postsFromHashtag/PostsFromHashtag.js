@@ -8,14 +8,13 @@ import Feed from "../feed/Feed";
 import RenderPosts from "../timeline/RenderPosts";
 import FeedLoading from "../shared/FeedLoading";
 import UserContext from "../context/UserContext";
-import ControlApiContext from "../context/ControlApiContext";
 import HashtagBox from "../timeline/HashtagBox";
+import ControlApiContext from "../context/ControlApiContext";
 
-
-export default function PostsFromUser() {
-	const [userPosts, setUserPosts] = useState([]);
-	const navigate = useNavigate();
-	let { id } = useParams();
+export default function PostsFromHashtag() {
+	const { hashtag } = useParams() 
+	const [TagPosts, setTagPosts] = useState([]);
+	const navigate = useNavigate();		
 	const { userInformation } = useContext(UserContext);
 	const [controlLoading, setControlLoading] = useState(true);
 	const { setControlApi, setControlApiUser, controlApiUser } =
@@ -29,15 +28,15 @@ export default function PostsFromUser() {
 
 	useEffect(() => {
 		axios
-			.get(`${urls.getPosts}/${id}`, config)
+			.get(`${urls.getHashtag}/${hashtag}`, config)
 			.then((response) => {
-				setUserPosts(response.data);
+				setTagPosts(response.data);
 				setControlLoading(false);
 				setControlApiUser(false);
 			})
 			.catch((err) => {
 				if (err.response.status === 404) {
-					alert("Usuário não encontrado!");
+					alert("Hashtag não encontrada!");
 					navigate("/timeline");
 					setControlLoading(false);
 				} else {
@@ -49,21 +48,20 @@ export default function PostsFromUser() {
 
 	return (
 		<Feed>
-
 			{controlLoading ? (
 				<FeedLoading />
 			) : (
 				<>
-					{!userPosts.length ? null : (
-						<Title>{userPosts[0].username}'s posts</Title>
+					{!TagPosts.length ? null : (
+						<Title># {hashtag}</Title>
 					)}
 
 					<Container>
-						<ContainerTimeline>					
-							{!userPosts.length ? (
-								<NoPostsYet>User hasn't posted yet</NoPostsYet>
+						<ContainerTimeline>
+							{!TagPosts.length ? (
+								<NoPostsYet>No posts yet!</NoPostsYet>
 							) : (
-								userPosts.map((elem, index) => (
+								TagPosts.map((elem, index) => (
 									<RenderPosts
 										key={index}
 										elem={elem}
@@ -73,9 +71,9 @@ export default function PostsFromUser() {
 								))
 							)}
 						</ContainerTimeline>
-						<HashtagBox />
+						<HashtagBox/>
 					</Container>
-
+					
 				</>
 			)}
 		</Feed>

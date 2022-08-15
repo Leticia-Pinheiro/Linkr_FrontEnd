@@ -22,7 +22,7 @@ export default function PostInterface({ setControlApi }) {
 
 	function submitForm(e) {
 		e.preventDefault();
-
+		
 		setIsActive(false);
 
 		const body = {
@@ -91,15 +91,15 @@ const Form = styled.form`
 
 const Container = styled.div`
 	display: flex;
-	width: 100%;
+	width: 611px;
 	height: 210px;
 	padding: 20px;
 	background-color: #fff;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 16px;
-	margin: 40px 0 30px 0;
-
+	margin-bottom: 30px;
 	@media (max-width: 700px) {
+		width: 100%;
 		border-radius: 0;
 	}
 `;
@@ -109,7 +109,6 @@ const Title = styled.h2`
 	font-weight: 300;
 	font-size: 20px;
 	color: #707070;
-
 	margin-bottom: 10px;
 `;
 
@@ -117,25 +116,21 @@ const InputContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 500px;
-
 	margin-left: 15px;
 `;
 
 const UrlInput = styled.input`
 	all: unset;
-
 	height: 30px;
 	padding-left: 10px;
 	margin-bottom: 5px;
 	background-color: ${(props) => (props.disabled ? "#D6D6D6" : "#EFEFEF")};
 	border-radius: 5px;
 	box-sizing: border-box;
-
 	font-family: "Lato";
 	font-weight: 300;
 	font-size: 15px;
 	color: #949494;
-
 	::placeholder {
 		font-family: "Lato";
 		font-weight: 300;
@@ -146,19 +141,16 @@ const UrlInput = styled.input`
 
 const TextInput = styled.textarea`
 	all: unset;
-
 	height: 66px;
 	padding: 10px;
 	margin-bottom: 5px;
 	background-color: ${(props) => (props.disabled ? "#D6D6D6" : "#EFEFEF")};
 	border-radius: 5px;
 	box-sizing: border-box;
-
 	font-family: "Lato";
 	font-weight: 300;
 	font-size: 15px;
 	color: #949494;
-
 	::placeholder {
 		font-family: "Lato";
 		font-weight: 300;
