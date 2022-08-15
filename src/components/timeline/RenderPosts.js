@@ -145,6 +145,7 @@ const Picture = styled.img`
 //likes
 const Likes = styled.div`
 	margin: 25px 0 0 0;
+	cursor: pointer;
 `;
 
 const User = styled.p`
@@ -228,4 +229,5 @@ const Delete = styled(MdDelete)`
 	position: absolute;
 	top: 15px;
 	right: 15px;
+	cursor: pointer;
 `;

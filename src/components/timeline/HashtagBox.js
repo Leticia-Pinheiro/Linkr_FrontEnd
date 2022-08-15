@@ -1,13 +1,58 @@
 import styled from 'styled-components'
+import { useContext, useState } from "react";
+import UserContext from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import urls from "../shared/urls";
+import FeedLoading from "../shared/FeedLoading";
 
 export default function HashtagBox(){
+    const navigate = useNavigate();
+    const [tagsData, setTagsData] = useState([]);
+	const [controlApi, setControlApi] = useState(true);
+	const [controlLoading, setControlLoading] = useState(true);
+	const { userInformation } = useContext(UserContext);
+    const [hashtag, setHashtag] = useState("")
+
+	if (controlApi) {
+		setControlApi(false);
+
+		const header = {
+            headers: {
+                Authorization: `Bearer ${userInformation.token}`
+            }
+        };
+
+		axios
+			.get(urls.getHashtags, header)
+			.then((response) => {
+				setControlLoading(false);
+				setTagsData(response.data);                
+			})
+			.catch((err) => {
+				setControlLoading(false);
+                setTagsData("error");
+				
+			});
+	}
+
+    function goToTagPosts(tag){
+        navigate(`/hashtag/${tag}`)	
+        window.location.reload(false);	
+	}	
+    
 
     return(
         <Container> 
             <Title>trending</Title>
             <Line></Line>
             <ContainerTag>
-
+                {!tagsData.length ? (
+					<></>
+				) : (
+					tagsData.map((tag) => (
+						<Tag key={tag.id} onClick={() => goToTagPosts(tag.name)}># {tag.name}</Tag>
+					)))}
             </ContainerTag>
         </Container>
     )
@@ -40,4 +85,18 @@ const Line = styled.div`
     height: 0;
     border: 1px solid #484848;`
 
-const ContainerTag = styled.div``
+const ContainerTag = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin: 22px 0 0 16px;`
+
+const Tag = styled.div`
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 23px;
+    letter-spacing: 0.05em;
+    color: #FFFFFF;
+    cursor: pointer;
+    padding: 3px;`

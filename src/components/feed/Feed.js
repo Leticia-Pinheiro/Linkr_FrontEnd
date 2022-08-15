@@ -21,10 +21,14 @@ export default function Feed(props) {
 		setUserInformation(null);
 	}
 
+	function toTimeline() {		
+		navigate("/timeline");		
+	}
+
 	return (
 		<>
 			<Header>
-				<h1>linkr</h1>
+				<Title onClick = {toTimeline}>linkr</Title>
 
 				<OuterLogout onClick={showOrHide}>
 					{showLogout ? <ArrowUp /> : <ArrowDown />}
@@ -51,23 +55,25 @@ const Header = styled.div`
 	justify-content: space-between;
 	position: fixed;
 	top: 0;
-	z-index: 1;
-	h1 {
-		font-size: 49px;
-		font-weight: bold;
-		font-family: "Passion One", cursive;
-		color: #ffffff;
-		margin-left: 28px;
-		@media (max-width: 700px) {
-			font-size: 45px;
-			margin-left: 17px;
-		}
-	}
+	z-index: 1;	
 	@media (max-width: 700px) {
 		position: fixed;
 		top: 0;
 	}
 `;
+
+const Title = styled.div`
+	font-size: 49px;
+	font-weight: bold;
+	font-family: "Passion One", cursive;
+	color: #ffffff;
+	margin-left: 28px;
+	cursor: pointer;
+	@media (max-width: 700px) {
+		font-size: 45px;
+		margin-left: 17px;
+	}
+`
 
 const OuterLogout = styled.div`
 	display: flex;

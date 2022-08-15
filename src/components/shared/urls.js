@@ -8,7 +8,8 @@ const urls = {
 	delete: `${BASE_URL}/posts`,
 	like: `${BASE_URL}/like`,
 	getUsers: `${BASE_URL}/users`,
-	getHashtag: `${BASE_URL}/hashtag`
+	getHashtag: `${BASE_URL}/hashtag`,
+	getHashtags: `${BASE_URL}/hashtags`,
 };
 
 export default urls;

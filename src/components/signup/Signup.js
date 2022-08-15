@@ -131,6 +131,7 @@ const Button = styled.button`
 	border: none;
 	color: white;
 	pointer-events: ${(props) => (props.block ? "none" : null)};
+	cursor: pointer;
 `;
 
 const Switch = styled.div`
@@ -140,4 +141,5 @@ const Switch = styled.div`
 	text-decoration-line: underline;
 	color: #ffffff;
 	margin: 15px auto 0 auto;
+	cursor: pointer;
 `;
