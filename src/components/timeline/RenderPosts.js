@@ -35,6 +35,7 @@ export default function RenderPosts({
 	function goToTagPosts(tag){
 		const hashtag = tag.slice(1);
 		navigate(`/hashtag/${hashtag}`)
+		window.location.reload(false);
 	}	
 
 	function goToUserPosts(id) {

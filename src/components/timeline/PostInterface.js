@@ -22,7 +22,7 @@ export default function PostInterface({ setControlApi }) {
 
 	function submitForm(e) {
 		e.preventDefault();
-
+		
 		setIsActive(false);
 
 		const body = {
@@ -116,10 +116,6 @@ const InputContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 500px;
-<<<<<<< HEAD
-=======
-
->>>>>>> 1532c197f703dd13cca35e10ad4e9dad0e652a02
 	margin-left: 15px;
 `;
 

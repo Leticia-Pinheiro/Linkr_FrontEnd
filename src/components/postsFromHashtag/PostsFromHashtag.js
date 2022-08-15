@@ -9,6 +9,7 @@ import RenderPosts from "../timeline/RenderPosts";
 import FeedLoading from "../shared/FeedLoading";
 import UserContext from "../context/UserContext";
 import HashtagBox from "../timeline/HashtagBox";
+import ControlApiContext from "../context/ControlApiContext";
 
 export default function PostsFromHashtag() {
 	const { hashtag } = useParams() 
@@ -16,6 +17,8 @@ export default function PostsFromHashtag() {
 	const navigate = useNavigate();		
 	const { userInformation } = useContext(UserContext);
 	const [controlLoading, setControlLoading] = useState(true);
+	const { setControlApi, setControlApiUser, controlApiUser } =
+		useContext(ControlApiContext);
 
 	const config = {
 		headers: {
@@ -29,6 +32,7 @@ export default function PostsFromHashtag() {
 			.then((response) => {
 				setTagPosts(response.data);
 				setControlLoading(false);
+				setControlApiUser(false);
 			})
 			.catch((err) => {
 				if (err.response.status === 404) {
@@ -40,7 +44,7 @@ export default function PostsFromHashtag() {
 					setControlLoading(false);
 				}
 			});
-	}, []);
+	}, [controlApiUser]);
 
 	return (
 		<Feed>
@@ -58,7 +62,12 @@ export default function PostsFromHashtag() {
 								<NoPostsYet>No posts yet!</NoPostsYet>
 							) : (
 								TagPosts.map((elem, index) => (
-									<RenderPosts key={index} elem={elem} />
+									<RenderPosts
+										key={index}
+										elem={elem}
+										setControlApiUser={setControlApiUser}
+										setControlApi={setControlApi}
+									/>
 								))
 							)}
 						</ContainerTimeline>

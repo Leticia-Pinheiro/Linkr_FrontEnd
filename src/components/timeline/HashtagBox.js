@@ -1,22 +1,24 @@
 import styled from 'styled-components'
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect} from "react";
 import UserContext from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import urls from "../shared/urls";
 import FeedLoading from "../shared/FeedLoading";
+import ControlApiContext from '../context/ControlApiContext';
 
 export default function HashtagBox(){
     const navigate = useNavigate();
-    const [tagsData, setTagsData] = useState([]);
-	const [controlApi, setControlApi] = useState(true);
+    const [tagsData, setTagsData] = useState([]);	
+    const { setControlApi, controlApi, setControlApiUser } =
+		useContext(ControlApiContext);
 	const [controlLoading, setControlLoading] = useState(true);
 	const { userInformation } = useContext(UserContext);
     const [hashtag, setHashtag] = useState("")
 
-	if (controlApi) {
-		setControlApi(false);
-
+	
+		
+    useEffect(() => {
 		const header = {
             headers: {
                 Authorization: `Bearer ${userInformation.token}`
@@ -27,14 +29,16 @@ export default function HashtagBox(){
 			.get(urls.getHashtags, header)
 			.then((response) => {
 				setControlLoading(false);
-				setTagsData(response.data);                
+				setTagsData(response.data);  
+                setControlApi(false);              
 			})
 			.catch((err) => {
 				setControlLoading(false);
                 setTagsData("error");
+                setControlApi(false); 
 				
 			});
-	}
+	},[controlApi])
 
     function goToTagPosts(tag){
         navigate(`/hashtag/${tag}`)	
@@ -50,8 +54,8 @@ export default function HashtagBox(){
                 {!tagsData.length ? (
 					<></>
 				) : (
-					tagsData.map((tag) => (
-						<Tag key={tag.id} onClick={() => goToTagPosts(tag.name)}># {tag.name}</Tag>
+					tagsData.map((tag, index) => (
+						<Tag key={index} onClick={() => goToTagPosts(tag.name)}># {tag.name}</Tag>
 					)))}
             </ContainerTag>
         </Container>
