@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import UserContext from "../context/UserContext";
 import axios from "axios";
 
@@ -8,34 +8,37 @@ import RenderPosts from "./RenderPosts";
 import urls from "../shared/urls";
 import FeedLoading from "../shared/FeedLoading";
 import PostInterface from "./PostInterface";
+import ControlApiContext from "../context/ControlApiContext";
 import HashtagBox from "./HashtagBox";
 
+
 export default function Timeline() {
-	const [postsData, setPostsData] = useState("error");
-	const [controlApi, setControlApi] = useState(true);
+	const [postsData, setPostsData] = useState("");
 	const [controlLoading, setControlLoading] = useState(true);
 	const { userInformation } = useContext(UserContext);
+	const { setControlApi, controlApi, setControlApiUser } =
+		useContext(ControlApiContext);
 
-	if (controlApi) {
-		setControlApi(false);
-
+	useEffect(() => {
 		const header = {
-            headers: {
-                Authorization: `Bearer ${userInformation.token}`
-            }
-        };
+			headers: {
+				Authorization: `Bearer ${userInformation.token}`,
+			},
+		};
 
 		axios
 			.get(urls.getPosts, header)
 			.then((response) => {
 				setControlLoading(false);
 				setPostsData(response.data);
+				setControlApi(false);
 			})
 			.catch((err) => {
 				setControlLoading(false);
 				setPostsData("error");
+				setControlApi(false);
 			});
-	}
+	}, [controlApi]);
 
 	return (
 		<Feed>
@@ -55,15 +58,20 @@ export default function Timeline() {
 						<NoPostsYet>There are no posts yet</NoPostsYet>
 					) : (
 						postsData.map((elem, index) => (
-							<RenderPosts key={index} elem={elem} setControlApi={setControlApi} />
+							<RenderPosts
+								key={index}
+								elem={elem}
+								setControlApi={setControlApi}
+								setControlApiUser={setControlApiUser}
+							/>
 						))
 					)}
 				</ContainerTimeline>
 
 				<HashtagBox/>
-			</Container>
+			</Container>			
 			
-			
+
 		</Feed>
 	);
 }

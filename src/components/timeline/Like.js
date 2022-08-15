@@ -1,63 +1,78 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import styled from "styled-components";
 import urls from "../shared/urls.js";
 import UserContext from "../context/UserContext";
 
-export default function Like ({ postId, liked }) {
-    
-    const {userInformation} = useContext(UserContext);
-    const [isLiked, setIsLiked] = useState(liked); 
+export default function Like({
+	postId,
+	liked,
+	likes,
+	setControlApi,
+	setControlApiUser,
+}) {
+	const { userInformation } = useContext(UserContext);
 
-    function toggleLike () {
-
-        const body = {
+	function toggleLike() {
+		const body = {
 			postId,
-			postStatus: !isLiked
+			postStatus: !liked,
 		};
 
 		const header = {
-            headers: {
-                Authorization: `Bearer ${userInformation.token}`
-            }
-        };
-        
-        axios.put(urls.like, body, header).then( () => {
-            setIsLiked(!isLiked);
-        })
-        
-    }
+			headers: {
+				Authorization: `Bearer ${userInformation.token}`,
+			},
+		};
 
-    return (
-        <Container>
-            {isLiked ? <Liked onClick={toggleLike}/> : <NotLiked onClick={toggleLike}/>}
-            <LikesCount>Like</LikesCount>
-        </ Container>
-    )
+		axios
+			.put(urls.like, body, header)
+			.then(() => {
+				setControlApi(true);
+				setControlApiUser(true);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
+
+	return (
+		<Container>
+			{liked ? (
+				<Liked onClick={toggleLike} />
+			) : (
+				<NotLiked onClick={toggleLike} />
+			)}
+			<LikesCount>
+				{likes}
+				{likes > 1 ? " likes" : " like"}
+			</LikesCount>
+		</Container>
+	);
 }
 
 const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 `;
 
 const Liked = styled(IoHeart)`
-    fill: #AC0000;
-    font-size: 25px;
+	fill: #ac0000;
+	font-size: 25px;
 `;
 
 const NotLiked = styled(IoHeartOutline)`
-    color: #FFF;
-    font-size: 25px;
+	color: #fff;
+	font-size: 25px;
 `;
 
 const LikesCount = styled.h3`
-    font-family: 'Lato';
-    font-weight: 400;
-    font-size: 11px;
-    color: #fff;
+	font-family: "Lato";
+	font-weight: 400;
+	font-size: 11px;
+	color: #fff;
 
-    margin-top: 5px;
+	margin-top: 5px;
 `;

@@ -7,9 +7,9 @@ import Login from "./login/Login";
 import Signup from "./signup/Signup";
 import UserContext from "./context/UserContext";
 import Timeline from "./timeline/Timeline";
-// import Hashtag from "./timeline/Hashtag.js"
 import PostsFromHashtag from "./postsFromHashtag/PostsFromHashtag.js"
 import PostsFromUser from "./postsFromUser/PostsFromUser";
+import ControlApiContext from "./context/ControlApiContext";
 
 
 export default function App() {
@@ -17,29 +17,35 @@ export default function App() {
 		imageAvatar: localStorage?.getItem("avatar"),
 		token: localStorage?.getItem("token"),
 	});
+	const [controlApi, setControlApi] = useState(true);
+	const [controlApiUser, setControlApiUser] = useState(true);
 
 	return (
 		<>
 			<GlobalResetStyle />
 			<GlobalStyle />
 
-			<UserContext.Provider
-				value={{
-					setUserInformation,
-					userInformation,
-				}}
+			<ControlApiContext.Provider
+				value={{ setControlApi, controlApi, setControlApiUser, controlApiUser }}
 			>
-				<BrowserRouter>
-					<Routes>
-						<Route path="/" element={<Login />} />
-						<Route path="/signup" element={<Signup />} />
-						<Route path="/timeline" element={<Timeline />} />
-						<Route path="/hashtag/:hashtag" element={<PostsFromHashtag />} />
-						<Route path="/user/:id" element={<PostsFromUser />} />
+				<UserContext.Provider
+					value={{
+						setUserInformation,
+						userInformation,
+					}}
+				>
+					<BrowserRouter>
+						<Routes>
+							<Route path="/" element={<Login />} />
+							<Route path="/signup" element={<Signup />} />
+							<Route path="/timeline" element={<Timeline />} />
+							<Route path="/user/:id" element={<PostsFromUser />} />
+							<Route path="/hashtag/:hashtag" element={<PostsFromHashtag />} />
+						</Routes>
+					</BrowserRouter>
+				</UserContext.Provider>					
+			</ControlApiContext.Provider>
 
-					</Routes>
-				</BrowserRouter>
-			</UserContext.Provider>
 		</>
 	);
 }
