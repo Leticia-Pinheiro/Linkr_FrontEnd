@@ -36,7 +36,9 @@ export default function Timeline() {
 				setControlLoading(false);
 				setPostsData(response.data);
 				setControlApi(false);
-				setLastPostCreatedAt(response.data.post?.createdAt);
+				if (response.data.post) {
+					setLastPostCreatedAt(response.data.post[0].createdAt);
+				}
 			})
 			.catch((err) => {
 				setControlLoading(false);
