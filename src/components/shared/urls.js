@@ -1,6 +1,4 @@
-
-const BASE_URL = "https://app-linkr.herokuapp.com/";
-
+const BASE_URL = "https://app-linkr.herokuapp.com";
 
 const urls = {
 	signup: `${BASE_URL}/signup`,
@@ -14,7 +12,6 @@ const urls = {
 	getHashtag: `${BASE_URL}/hashtag`,
 	getHashtags: `${BASE_URL}/hashtags`,
 	follow: `${BASE_URL}/follow`,
-
 };
 
 export default urls;
