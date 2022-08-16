@@ -14,11 +14,12 @@ import HashtagBox from "./HashtagBox";
 import LoadPostsButton from "./LoadPostsButton";
 
 export default function Timeline() {
-	const [postsData, setPostsData] = useState("");
+	const [postsData, setPostsData] = useState({ posts: [], followers: [] });
 	const [controlLoading, setControlLoading] = useState(true);
 	const { userInformation } = useContext(UserContext);
 	const { setControlApi, controlApi, setControlApiUser } =
 		useContext(ControlApiContext);
+
 	const [lastPostCreatedAt, setLastPostCreatedAt] = useState(null);
 	const [recentPosts, setRecentPosts] = useState([]);
 	
@@ -42,6 +43,7 @@ export default function Timeline() {
 				setPostsData("error");
 				setControlApi(false);
 			});
+
 	}, [controlApi]);
 
 	useInterval( async () => {
@@ -86,10 +88,14 @@ export default function Timeline() {
 								An error occured while trying to fetch the posts, please refresh
 								the page!
 							</ErrorText>
-						) : !postsData.length ? (
-							<NoPostsYet>There are no posts yet</NoPostsYet>
+						) : !postsData.followers.length ? (
+							<NoPostsYet>
+								You don't follow anyone yet. Search for new friends!
+							</NoPostsYet>
+						) : !postsData.posts.length ? (
+							<NoPostsYet>No posts found from your friends</NoPostsYet>
 						) : (
-							postsData.map((elem, index) => (
+							postsData.posts.map((elem, index) => (
 								<RenderPosts
 									key={index}
 									elem={elem}

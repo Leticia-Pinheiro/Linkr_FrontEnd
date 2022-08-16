@@ -34,7 +34,7 @@ export default function Feed(props) {
 					{showLogout ? <ArrowUp /> : <ArrowDown />}
 
 					<InnerLogout
-						src={userInformation.imageAvatar}
+						src={userInformation.imageAvatar || userInformation.image}
 						alt="avatar"
 					></InnerLogout>
 				</OuterLogout>
