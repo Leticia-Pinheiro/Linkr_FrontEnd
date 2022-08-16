@@ -21,19 +21,22 @@ export default function Feed(props) {
 		setUserInformation(null);
 	}
 
-	function toTimeline() {		
-		navigate("/timeline");		
+	function toTimeline() {
+		navigate("/timeline");
 	}
 
 	return (
 		<>
 			<Header>
-				<Title onClick = {toTimeline}>linkr</Title>
+				<Title onClick={toTimeline}>linkr</Title>
 
 				<OuterLogout onClick={showOrHide}>
 					{showLogout ? <ArrowUp /> : <ArrowDown />}
 
-					<InnerLogout src = {userInformation.image} alt = "avatar"></InnerLogout>
+					<InnerLogout
+						src={userInformation.imageAvatar}
+						alt="avatar"
+					></InnerLogout>
 				</OuterLogout>
 			</Header>
 
@@ -55,7 +58,7 @@ const Header = styled.div`
 	justify-content: space-between;
 	position: fixed;
 	top: 0;
-	z-index: 1;	
+	z-index: 1;
 	@media (max-width: 700px) {
 		position: fixed;
 		top: 0;
@@ -73,7 +76,7 @@ const Title = styled.div`
 		font-size: 45px;
 		margin-left: 17px;
 	}
-`
+`;
 
 const OuterLogout = styled.div`
 	display: flex;
@@ -83,7 +86,7 @@ const OuterLogout = styled.div`
 const InnerLogout = styled.img`
 	width: 53px;
 	height: 53px;
-	border-radius: 50%;	
+	border-radius: 50%;
 	margin-right: 17px;
 	cursor: pointer;
 	@media (max-width: 700px) {
@@ -139,8 +142,9 @@ const Logout = styled.div`
 
 const Body = styled.div`
 	height: 100%;
-	width: 70%;
+	width: 60%;
 	margin: 80px auto 0 auto;
+
 	@media (max-width: 700px) {
 		width: 100%;
 		margin-top: 140px;

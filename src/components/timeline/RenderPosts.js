@@ -22,7 +22,7 @@ export default function RenderPosts({
 	let loginStoraged = localStorage.getItem("login");
 	let deserializationData = JSON.parse(loginStoraged);
 	const navigate = useNavigate();
-	
+
 	function openLink(url) {
 		window.open(url);
 	}
@@ -50,7 +50,7 @@ export default function RenderPosts({
 		setIsVisible(false);
 	}
 
-	function handleEditButton () {
+	function handleEditButton() {
 		setEditableText(elem.text);
 		setIsEditable(!isEditable);
 		setIsDisabled(false);
@@ -98,7 +98,7 @@ export default function RenderPosts({
 					</User>
 
 					{isEditable ? (
-						<EditPost 
+						<EditPost
 							postId={elem.id}
 							text={elem.text}
 							isEditable={isEditable}
@@ -111,6 +111,7 @@ export default function RenderPosts({
 							setControlApiUser={setControlApiUser}
 						/>
 					) : (
+
 					< ReactTagify  
 					tagStyle = { tagStyle }  
 					tagClicked = { ( tag ) => goToTagPosts(tag)}
@@ -195,7 +196,6 @@ const Picture = styled.img`
 	}
 `;
 
-//likes
 const Likes = styled.div`
 	display: flex;
 	justify-content: center;
@@ -230,10 +230,6 @@ const LinkContainer = styled.div`
 	border: 1px solid #4d4d4d;
 	border-radius: 11px;
 	cursor: pointer;
-
-	@media (max-width: 700px) {
-		width: 80%;
-	}
 `;
 
 const LinkTextContainer = styled.div`
@@ -242,6 +238,11 @@ const LinkTextContainer = styled.div`
 	justify-content: space-between;
 	width: 80%;
 	padding: 10px;
+	max-width: 350px;
+
+	@media (max-width: 700px) {
+		width: 80%;
+	}
 `;
 
 const LinkImage = styled.img`
@@ -261,6 +262,7 @@ const LinkTitle = styled.p`
 	font-size: 16px;
 	color: #cecece;
 	word-wrap: break-word;
+	word-break: break-all;
 	margin-bottom: 15px;
 `;
 
@@ -270,15 +272,18 @@ const LinkDescription = styled.p`
 	font-size: 11px;
 	color: #9b9595;
 	word-wrap: break-word;
+	word-break: break-all;
 	margin-bottom: 15px;
 `;
 
 const Link = styled.p`
+	max-width: 250px;
 	font-family: "Lato";
 	font-weight: 400;
 	font-size: 11px;
 	color: #cecece;
 	word-wrap: break-word;
+	word-break: break-all;
 `;
 
 const Delete = styled(MdDelete)`
