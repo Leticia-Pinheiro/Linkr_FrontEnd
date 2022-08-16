@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useContext, useState, useEffect } from "react";
 import UserContext from "../context/UserContext";
 import axios from "axios";
+import useInterval from "use-interval";
 
 import Feed from "../feed/Feed";
 import RenderPosts from "./RenderPosts";
@@ -10,6 +11,7 @@ import FeedLoading from "../shared/FeedLoading";
 import PostInterface from "./PostInterface";
 import ControlApiContext from "../context/ControlApiContext";
 import HashtagBox from "./HashtagBox";
+import LoadPostsButton from "./LoadPostsButton";
 
 export default function Timeline() {
 	const [postsData, setPostsData] = useState("");
@@ -17,7 +19,9 @@ export default function Timeline() {
 	const { userInformation } = useContext(UserContext);
 	const { setControlApi, controlApi, setControlApiUser } =
 		useContext(ControlApiContext);
-
+	const [lastPostCreatedAt, setLastPostCreatedAt] = useState(null);
+	const [recentPosts, setRecentPosts] = useState([]);
+	
 	useEffect(() => {
 		const header = {
 			headers: {
@@ -31,6 +35,7 @@ export default function Timeline() {
 				setControlLoading(false);
 				setPostsData(response.data);
 				setControlApi(false);
+				setLastPostCreatedAt(response.data[0].createdAt);
 			})
 			.catch((err) => {
 				setControlLoading(false);
@@ -39,6 +44,26 @@ export default function Timeline() {
 			});
 	}, [controlApi]);
 
+	useInterval( async () => {
+        
+        const body = {
+            lastPostCreatedAt
+        }
+
+        const header = {
+            headers: {
+                Authorization: `Bearer ${userInformation.token}`
+            }
+        };
+
+        const promise = axios.post(`${urls.loadPosts}`, body, header);
+
+        promise.then( response => {
+			setRecentPosts(response.data)
+        });
+
+    }, 5000);
+
 	return (
 		<Feed>
 			<Title>timeline</Title>
@@ -46,6 +71,13 @@ export default function Timeline() {
 				<Container>
 					<ContainerTimeline>
 						<PostInterface setControlApi={setControlApi} />
+						{recentPosts.length ? 
+							<LoadPostsButton
+								amount={recentPosts.length} 
+								recentPosts={recentPosts}
+								setPostsData={setPostsData}
+							/>
+						: null}
 
 						{controlLoading ? (
 							<FeedLoading />
