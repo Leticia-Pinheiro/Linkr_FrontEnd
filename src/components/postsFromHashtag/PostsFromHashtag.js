@@ -12,9 +12,9 @@ import HashtagBox from "../timeline/HashtagBox";
 import ControlApiContext from "../context/ControlApiContext";
 
 export default function PostsFromHashtag() {
-	const { hashtag } = useParams() 
+	const { hashtag } = useParams();
 	const [TagPosts, setTagPosts] = useState([]);
-	const navigate = useNavigate();		
+	const navigate = useNavigate();
 	const { userInformation } = useContext(UserContext);
 	const [controlLoading, setControlLoading] = useState(true);
 	const { setControlApi, setControlApiUser, controlApiUser } =
@@ -52,9 +52,7 @@ export default function PostsFromHashtag() {
 				<FeedLoading />
 			) : (
 				<>
-					{!TagPosts.length ? null : (
-						<Title># {hashtag}</Title>
-					)}
+					{!TagPosts.length ? null : <Title># {hashtag}</Title>}
 
 					<Container>
 						<ContainerTimeline>
@@ -71,9 +69,8 @@ export default function PostsFromHashtag() {
 								))
 							)}
 						</ContainerTimeline>
-						<HashtagBox/>
+						<HashtagBox />
 					</Container>
-					
 				</>
 			)}
 		</Feed>
@@ -101,8 +98,10 @@ const NoPostsYet = styled.p`
 `;
 
 const Container = styled.div`
-	display: flex;`
+	display: flex;
+`;
 
 const ContainerTimeline = styled.div`
 	display: flex;
-	flex-direction: column;`
+	flex-direction: column;
+`;

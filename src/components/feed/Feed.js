@@ -142,8 +142,9 @@ const Logout = styled.div`
 
 const Body = styled.div`
 	height: 100%;
-	width: 70%;
+	width: 60%;
 	margin: 80px auto 0 auto;
+
 	@media (max-width: 700px) {
 		width: 100%;
 		margin-top: 140px;

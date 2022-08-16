@@ -11,7 +11,6 @@ import PostInterface from "./PostInterface";
 import ControlApiContext from "../context/ControlApiContext";
 import HashtagBox from "./HashtagBox";
 
-
 export default function Timeline() {
 	const [postsData, setPostsData] = useState("");
 	const [controlLoading, setControlLoading] = useState(true);
@@ -43,35 +42,34 @@ export default function Timeline() {
 	return (
 		<Feed>
 			<Title>timeline</Title>
-			<Container>			
-				<ContainerTimeline>
-					<PostInterface setControlApi={setControlApi} />		
+			<Box>
+				<Container>
+					<ContainerTimeline>
+						<PostInterface setControlApi={setControlApi} />
 
-					{controlLoading ? (
-						<FeedLoading />
-					) : postsData === "error" ? (
-						<ErrorText>
-							An error occured while trying to fetch the posts, please refresh the
-							page!
-						</ErrorText>
-					) : !postsData.length ? (
-						<NoPostsYet>There are no posts yet</NoPostsYet>
-					) : (
-						postsData.map((elem, index) => (
-							<RenderPosts
-								key={index}
-								elem={elem}
-								setControlApi={setControlApi}
-								setControlApiUser={setControlApiUser}
-							/>
-						))
-					)}
-				</ContainerTimeline>
-
-				<HashtagBox/>
-			</Container>			
-			
-
+						{controlLoading ? (
+							<FeedLoading />
+						) : postsData === "error" ? (
+							<ErrorText>
+								An error occured while trying to fetch the posts, please refresh
+								the page!
+							</ErrorText>
+						) : !postsData.length ? (
+							<NoPostsYet>There are no posts yet</NoPostsYet>
+						) : (
+							postsData.map((elem, index) => (
+								<RenderPosts
+									key={index}
+									elem={elem}
+									setControlApi={setControlApi}
+									setControlApiUser={setControlApiUser}
+								/>
+							))
+						)}
+					</ContainerTimeline>
+				</Container>
+				<HashtagBox />
+			</Box>
 		</Feed>
 	);
 }
@@ -106,14 +104,19 @@ const NoPostsYet = styled.p`
 
 const Container = styled.div`
 	display: flex;
-	`
+`;
+
 const ContainerTimeline = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 70%;
+	width: 100%;
 
 	@media (max-width: 700px) {
 		width: 100%;
 	}
-	`
+`;
 
+const Box = styled.div`
+	display: flex;
+	margin: 0 auto;
+`;
