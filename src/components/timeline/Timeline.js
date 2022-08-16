@@ -22,7 +22,7 @@ export default function Timeline() {
 
 	const [lastPostCreatedAt, setLastPostCreatedAt] = useState(null);
 	const [recentPosts, setRecentPosts] = useState([]);
-	
+
 	useEffect(() => {
 		const header = {
 			headers: {
@@ -36,35 +36,32 @@ export default function Timeline() {
 				setControlLoading(false);
 				setPostsData(response.data);
 				setControlApi(false);
-				setLastPostCreatedAt(response.data[0].createdAt);
+				setLastPostCreatedAt(response.data.post?.createdAt);
 			})
 			.catch((err) => {
 				setControlLoading(false);
 				setPostsData("error");
 				setControlApi(false);
 			});
-
 	}, [controlApi]);
 
-	useInterval( async () => {
-        
-        const body = {
-            lastPostCreatedAt
-        }
+	useInterval(async () => {
+		const body = {
+			lastPostCreatedAt,
+		};
 
-        const header = {
-            headers: {
-                Authorization: `Bearer ${userInformation.token}`
-            }
-        };
+		const header = {
+			headers: {
+				Authorization: `Bearer ${userInformation.token}`,
+			},
+		};
 
-        const promise = axios.post(`${urls.loadPosts}`, body, header);
+		const promise = axios.post(`${urls.loadPosts}`, body, header);
 
-        promise.then( response => {
-			setRecentPosts(response.data)
-        });
-
-    }, 5000);
+		promise.then((response) => {
+			setRecentPosts(response.data);
+		});
+	}, 5000);
 
 	return (
 		<Feed>
@@ -73,13 +70,13 @@ export default function Timeline() {
 				<Container>
 					<ContainerTimeline>
 						<PostInterface setControlApi={setControlApi} />
-						{recentPosts.length ? 
+						{recentPosts.length ? (
 							<LoadPostsButton
-								amount={recentPosts.length} 
+								amount={recentPosts.length}
 								recentPosts={recentPosts}
 								setPostsData={setPostsData}
 							/>
-						: null}
+						) : null}
 
 						{controlLoading ? (
 							<FeedLoading />
