@@ -44,10 +44,8 @@ export default function HashtagBox() {
 					<></>
 				) : (
 					tagsData.map((tag, index) => (
-						<BoxTag>
-							<Tag key={index} onClick={() => goToTagPosts(tag.name)}>
-								# {tag.name}
-							</Tag>
+						<BoxTag key={index}>
+							<Tag onClick={() => goToTagPosts(tag.name)}># {tag.name}</Tag>
 						</BoxTag>
 					))
 				)}
