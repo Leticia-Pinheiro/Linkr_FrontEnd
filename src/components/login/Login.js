@@ -36,6 +36,7 @@ export default function Login() {
 				localStorage.setItem("login", serializationData);
 				localStorage.setItem("avatar", response.data.image);
 				localStorage.setItem("token", response.data.token);
+				localStorage.setItem("username", response.data.username);
 
 				navigate("/timeline");
 			})
@@ -69,7 +70,7 @@ export default function Login() {
 					}
 				});
 		}
-	},[]);
+	}, []);
 
 	function toSignup() {
 		navigate("/signup");
