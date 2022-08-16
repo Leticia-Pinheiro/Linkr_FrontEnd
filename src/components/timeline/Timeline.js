@@ -19,10 +19,10 @@ export default function Timeline() {
 	const { userInformation } = useContext(UserContext);
 	const { setControlApi, controlApi, setControlApiUser } =
 		useContext(ControlApiContext);
-
+	
 	const [lastPostCreatedAt, setLastPostCreatedAt] = useState(null);
 	const [recentPosts, setRecentPosts] = useState([]);
-
+	console.log(postsData)
 	useEffect(() => {
 		const header = {
 			headers: {
@@ -75,6 +75,7 @@ export default function Timeline() {
 						{recentPosts.length ? (
 							<LoadPostsButton
 								amount={recentPosts.length}
+								postsData={postsData}
 								recentPosts={recentPosts}
 								setPostsData={setPostsData}
 							/>
