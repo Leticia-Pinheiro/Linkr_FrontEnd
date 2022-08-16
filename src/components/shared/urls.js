@@ -14,6 +14,7 @@ const urls = {
 	updatePost: `${BASE_URL}/posts`,
 	getHashtag: `${BASE_URL}/hashtag`,
 	getHashtags: `${BASE_URL}/hashtags`,
+	loadPosts: `${BASE_URL}/posts/load`,
 	follow: `${BASE_URL}/follow`,
 };
 
