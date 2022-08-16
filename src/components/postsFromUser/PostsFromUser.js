@@ -47,9 +47,6 @@ export default function PostsFromUser() {
 			});
 	}, [controlApiUser]);
 
-	console.log(userPosts[0]);
-	console.log(controlApiUser);
-
 	async function followUser() {
 		setDisableButton(true);
 
