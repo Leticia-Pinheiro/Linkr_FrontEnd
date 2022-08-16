@@ -12,31 +12,34 @@ import ControlApiContext from "../context/ControlApiContext";
 import HashtagBox from "./HashtagBox";
 
 export default function Timeline() {
-	const [postsData, setPostsData] = useState("");
+	const [postsData, setPostsData] = useState({ posts: [], followers: [] });
 	const [controlLoading, setControlLoading] = useState(true);
 	const { userInformation } = useContext(UserContext);
 	const { setControlApi, controlApi, setControlApiUser } =
 		useContext(ControlApiContext);
+	const header = {
+		headers: {
+			Authorization: `Bearer ${userInformation.token}`,
+		},
+	};
 
 	useEffect(() => {
-		const header = {
-			headers: {
-				Authorization: `Bearer ${userInformation.token}`,
-			},
-		};
-
-		axios
-			.get(urls.getPosts, header)
-			.then((response) => {
-				setControlLoading(false);
-				setPostsData(response.data);
-				setControlApi(false);
-			})
-			.catch((err) => {
-				setControlLoading(false);
-				setPostsData("error");
-				setControlApi(false);
-			});
+		setControlLoading(true);
+		async function teste() {
+			axios
+				.get(urls.getPosts, header)
+				.then((response) => {
+					setControlLoading(false);
+					setControlApi(false);
+					setPostsData(response.data);
+				})
+				.catch((err) => {
+					setControlLoading(false);
+					setPostsData("error");
+					setControlApi(false);
+				});
+		}
+		teste();
 	}, [controlApi]);
 
 	return (
@@ -54,10 +57,14 @@ export default function Timeline() {
 								An error occured while trying to fetch the posts, please refresh
 								the page!
 							</ErrorText>
-						) : !postsData.length ? (
-							<NoPostsYet>There are no posts yet</NoPostsYet>
+						) : !postsData.followers.length ? (
+							<NoPostsYet>
+								You don't follow anyone yet. Search for new friends!
+							</NoPostsYet>
+						) : !postsData.posts.length ? (
+							<NoPostsYet>No posts found from your friends</NoPostsYet>
 						) : (
-							postsData.map((elem, index) => (
+							postsData.posts.map((elem, index) => (
 								<RenderPosts
 									key={index}
 									elem={elem}

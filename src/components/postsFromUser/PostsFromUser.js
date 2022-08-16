@@ -58,7 +58,6 @@ export default function PostsFromUser() {
 			})
 			.catch((err) => {
 				setDisableButton(false);
-
 				alert(err.response.data);
 			});
 	}
@@ -73,7 +72,8 @@ export default function PostsFromUser() {
 						{!userPosts.length ? null : (
 							<Title>{userPosts[0].username}'s posts</Title>
 						)}
-						{userInformation.username !== userPosts[0].username ? (
+						{!userPosts.length ? null : userInformation.username !==
+						  userPosts[0]?.username ? (
 							<ButtonFollow
 								disable={disableButton ? "true" : "false"}
 								onClick={followUser}
@@ -98,7 +98,7 @@ export default function PostsFromUser() {
 								))
 							)}
 						</ContainerTimeline>
-						<HashtagBox />
+						{!userPosts.length ? null : <HashtagBox />}
 					</Container>
 				</>
 			)}
@@ -132,6 +132,7 @@ const Container = styled.div`
 const ContainerTimeline = styled.div`
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 `;
 
 const TitleContainer = styled.div`
