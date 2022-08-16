@@ -26,7 +26,6 @@ export default function HashtagBox() {
 				setControlApi(false);
 			})
 			.catch((err) => {
-				setTagsData("error");
 				setControlApi(false);
 			});
 	}, [controlApi]);
@@ -45,9 +44,9 @@ export default function HashtagBox() {
 					<></>
 				) : (
 					tagsData.map((tag, index) => (
-						<Tag key={index} onClick={() => goToTagPosts(tag.name)}>
-							# {tag.name}
-						</Tag>
+						<BoxTag key={index}>
+							<Tag onClick={() => goToTagPosts(tag.name)}># {tag.name}</Tag>
+						</BoxTag>
 					))
 				)}
 			</ContainerTag>
@@ -56,7 +55,8 @@ export default function HashtagBox() {
 }
 
 const Container = styled.div`
-	width: 301px;
+	width: 100%;
+	max-width: 300px;
 	height: 406px;
 	background: #171717;
 	border-radius: 16px;
@@ -80,7 +80,7 @@ const Title = styled.h1`
 `;
 
 const Line = styled.div`
-	width: 301px;
+	width: 100%;
 	height: 0;
 	border: 1px solid #484848;
 `;
@@ -91,7 +91,14 @@ const ContainerTag = styled.div`
 	margin: 22px 0 0 16px;
 `;
 
-const Tag = styled.div`
+const BoxTag = styled.div`
+	max-width: 240px;
+	height: 25px;
+	overflow: hidden;
+	cursor: pointer;
+`;
+
+const Tag = styled.p`
 	font-family: "Lato";
 	font-style: normal;
 	font-weight: 700;
@@ -99,6 +106,7 @@ const Tag = styled.div`
 	line-height: 23px;
 	letter-spacing: 0.05em;
 	color: #ffffff;
-	cursor: pointer;
+	text-overflow: ellipsis;
 	padding: 3px;
+	word-break: break-all;
 `;

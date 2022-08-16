@@ -2,15 +2,17 @@ import styled from "styled-components";
 import { DebounceInput } from "react-debounce-input";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { ImSearch } from "react-icons/im";
 
+import UserContext from "../context/UserContext.js";
 import urls from "../shared/urls.js";
 
 export default function SearchBar() {
 	const [searchBarData, setSearchBarData] = useState([]);
 	const navigate = useNavigate();
 	const ref = useRef(null);
+	const { userInformation } = useContext(UserContext);
 	useOutsideAlerter(ref);
 
 	function goToUserPosts(id) {
@@ -38,8 +40,14 @@ export default function SearchBar() {
 		if (str.length >= MIN) {
 			const strNoSpaces = str.replace(" ", "+");
 
+			const config = {
+				headers: {
+					Authorization: `Bearer ${userInformation.token}`,
+				},
+			};
+
 			axios
-				.get(`${urls.getUsers}?search=${strNoSpaces}`)
+				.get(`${urls.getUsers}?search=${strNoSpaces}`, config)
 				.then((response) => {
 					setSearchBarData(response.data);
 				})
@@ -70,6 +78,7 @@ export default function SearchBar() {
 							<BoxAvatar src={elem.imageUrl} alt="avatar" />
 
 							<TextUser>{elem.username}</TextUser>
+							{elem.following ? <IsFollowing>• following</IsFollowing> : null}
 						</BoxUser>
 					))}
 				</InputContainer>
@@ -139,4 +148,13 @@ const IconPlaceholder = styled(ImSearch)`
 	right: 5%;
 	color: #c6c6c6;
 	z-index: 1;
+`;
+
+const IsFollowing = styled.p`
+	font-family: "Lato";
+	font-style: normal;
+	font-weight: 400;
+	font-size: 19px;
+	color: #c5c5c5;
+	margin-left: 5px;
 `;
