@@ -1,4 +1,4 @@
-const BASE_URL = "https://app-linkr.herokuapp.com";
+const BASE_URL = "http://localhost:5000";
 
 // https://app-linkr.herokuapp.com
 // http://localhost:5000
@@ -16,6 +16,8 @@ const urls = {
 	getHashtags: `${BASE_URL}/hashtags`,
 	loadPosts: `${BASE_URL}/posts/load`,
 	follow: `${BASE_URL}/follow`,
+	repost: `${BASE_URL}/repost`,
+	repostTotal: `${BASE_URL}/repost`,
 };
 
 export default urls;
