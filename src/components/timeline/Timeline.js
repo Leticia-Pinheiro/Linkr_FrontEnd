@@ -22,7 +22,7 @@ export default function Timeline() {
 	
 	const [lastPostCreatedAt, setLastPostCreatedAt] = useState(null);
 	const [recentPosts, setRecentPosts] = useState([]);
-	console.log(postsData)
+
 	useEffect(() => {
 		const header = {
 			headers: {
@@ -36,8 +36,10 @@ export default function Timeline() {
 				setControlLoading(false);
 				setPostsData(response.data);
 				setControlApi(false);
-				if (response.data.post) {
-					setLastPostCreatedAt(response.data.post[0].createdAt);
+
+				if (response.data.posts) {
+					console.log(response.data.posts)
+					setLastPostCreatedAt(response.data.posts[0].createdAt);
 				}
 			})
 			.catch((err) => {
@@ -51,7 +53,6 @@ export default function Timeline() {
 		const body = {
 			lastPostCreatedAt,
 		};
-
 		const header = {
 			headers: {
 				Authorization: `Bearer ${userInformation.token}`,
