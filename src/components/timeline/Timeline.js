@@ -22,7 +22,7 @@ export default function Timeline() {
 	
 	const [lastPostCreatedAt, setLastPostCreatedAt] = useState(null);
 	const [recentPosts, setRecentPosts] = useState([]);
-	
+
 	useEffect(() => {
 		const header = {
 			headers: {
@@ -38,7 +38,6 @@ export default function Timeline() {
 				setControlApi(false);
 
 				if (response.data.posts) {
-					console.log(response.data.posts)
 					setLastPostCreatedAt(response.data.posts[0].createdAt);
 				}
 			})
@@ -49,7 +48,7 @@ export default function Timeline() {
 			});
 	}, [controlApi]);
 
-	useInterval(async () => {
+	useInterval( () => {
 		const body = {
 			lastPostCreatedAt,
 		};
@@ -63,6 +62,8 @@ export default function Timeline() {
 
 		promise.then((response) => {
 			setRecentPosts(response.data);
+			console.log(lastPostCreatedAt)
+			console.log(response.data)
 		});
 	}, 5000);
 
