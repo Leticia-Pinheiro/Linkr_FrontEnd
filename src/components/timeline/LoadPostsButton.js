@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import { BsArrowRepeat } from "react-icons/bs";
 
-export default function LoadPostsButton ({ amount, postsData, setPostsData, recentPosts}) {
-
+export default function LoadPostsButton ({ amount, postsData, setPostsData, recentPosts, setLastPostCreatedAt}) {
+    console.log(recentPosts)
     function handleClick () {
         setPostsData({
             followers: [...postsData.followers],
@@ -11,6 +11,7 @@ export default function LoadPostsButton ({ amount, postsData, setPostsData, rece
                 ...postsData.posts
             ]
         });
+        setLastPostCreatedAt(recentPosts[0].createdAt)
     }
 
     return (

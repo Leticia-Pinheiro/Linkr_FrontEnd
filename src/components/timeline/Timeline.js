@@ -22,7 +22,7 @@ export default function Timeline() {
 	
 	const [lastPostCreatedAt, setLastPostCreatedAt] = useState(null);
 	const [recentPosts, setRecentPosts] = useState([]);
-
+	
 	useEffect(() => {
 		const header = {
 			headers: {
@@ -79,6 +79,7 @@ export default function Timeline() {
 								postsData={postsData}
 								recentPosts={recentPosts}
 								setPostsData={setPostsData}
+								setLastPostCreatedAt={setLastPostCreatedAt}
 							/>
 						) : null}
 
