@@ -22,7 +22,7 @@ export default function PostInterface({ setControlApi }) {
 
 	function submitForm(e) {
 		e.preventDefault();
-		
+
 		setIsActive(false);
 
 		const body = {
@@ -30,10 +30,10 @@ export default function PostInterface({ setControlApi }) {
 		};
 
 		const header = {
-            headers: {
-                Authorization: `Bearer ${userInformation.token}`
-            }
-        };
+			headers: {
+				Authorization: `Bearer ${userInformation.token}`,
+			},
+		};
 
 		const promise = axios.post(urls.timeline, body, header);
 		promise
@@ -45,12 +45,11 @@ export default function PostInterface({ setControlApi }) {
 				setControlApi(true);
 			})
 			.catch(() => {
-				alert('There was an error posting your link!');
+				alert("There was an error posting your link!");
 			})
 			.finally(() => {
 				setIsActive(true);
 			});
-			
 	}
 
 	return (
@@ -99,7 +98,7 @@ const Container = styled.div`
 	border-radius: 16px;
 	margin-bottom: 30px;
 	@media (max-width: 700px) {
-		width: 100%;
+		width: 100vw;
 		border-radius: 0;
 	}
 `;

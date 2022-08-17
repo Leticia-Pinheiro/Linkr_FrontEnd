@@ -19,36 +19,39 @@ export default function Timeline() {
 	const { userInformation } = useContext(UserContext);
 	const { setControlApi, controlApi, setControlApiUser } =
 		useContext(ControlApiContext);
-	
+
 	const [lastPostCreatedAt, setLastPostCreatedAt] = useState(null);
 	const [recentPosts, setRecentPosts] = useState([]);
 
 	useEffect(() => {
-		const header = {
-			headers: {
-				Authorization: `Bearer ${userInformation.token}`,
-			},
-		};
+		async function teste() {
+			const header = {
+				headers: {
+					Authorization: `Bearer ${userInformation.token}`,
+				},
+			};
 
-		axios
-			.get(urls.getPosts, header)
-			.then((response) => {
-				setControlLoading(false);
-				setPostsData(response.data);
-				setControlApi(false);
+			axios
+				.get(urls.getPosts, header)
+				.then((response) => {
+					setControlLoading(false);
+					setPostsData(response.data);
+					setControlApi(false);
 
-				if (response.data.posts) {
-					setLastPostCreatedAt(response.data.posts[0].createdAt);
-				}
-			})
-			.catch((err) => {
-				setControlLoading(false);
-				setPostsData("error");
-				setControlApi(false);
-			});
+					if (response.data.posts.length) {
+						setLastPostCreatedAt(response.data.posts[0].createdAt);
+					}
+				})
+				.catch((err) => {
+					setControlLoading(false);
+					setPostsData("error");
+					setControlApi(false);
+				});
+		}
+		teste();
 	}, [controlApi]);
 
-	useInterval( () => {
+	useInterval(() => {
 		const body = {
 			lastPostCreatedAt,
 		};
@@ -62,8 +65,8 @@ export default function Timeline() {
 
 		promise.then((response) => {
 			setRecentPosts(response.data);
-			console.log(lastPostCreatedAt)
-			console.log(response.data)
+			// console.log(lastPostCreatedAt);
+			// console.log(response.data);
 		});
 	}, 5000);
 
@@ -104,6 +107,7 @@ export default function Timeline() {
 									elem={elem}
 									setControlApi={setControlApi}
 									setControlApiUser={setControlApiUser}
+									userInformation={userInformation}
 								/>
 							))
 						)}
