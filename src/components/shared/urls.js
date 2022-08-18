@@ -17,6 +17,8 @@ const urls = {
 	loadPosts: `${BASE_URL}/posts/load`,
 	oldestsPosts: `${BASE_URL}/posts/oldests`,
 	follow: `${BASE_URL}/follow`,
+	repost: `${BASE_URL}/repost`,
+	repostTotal: `${BASE_URL}/repost`,
 };
 
 export default urls;

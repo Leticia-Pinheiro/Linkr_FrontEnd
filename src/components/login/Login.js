@@ -37,10 +37,13 @@ export default function Login() {
 				localStorage.setItem("avatar", response.data.image);
 				localStorage.setItem("token", response.data.token);
 				localStorage.setItem("username", response.data.username);
+				localStorage.setItem("userId", response.data.userId);
 				setUserInformation({
 					...userInformation,
 					token: response.data.token,
 					image: response.data.image,
+					username: response.data.username,
+					userId: response.data.userId,
 				});
 
 				navigate("/timeline");

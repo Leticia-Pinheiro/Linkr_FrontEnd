@@ -22,6 +22,7 @@ export default function PostsFromUser() {
 	const [disableButton, setDisableButton] = useState(false);
 
 	const [page, setPage] = useState(0);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const config = {
 		headers: {
@@ -35,6 +36,7 @@ export default function PostsFromUser() {
 			.then((response) => {
 				setUserPosts(response.data);
 				setControlLoading(false);
+				setIsLoading(false);
 				setControlApiUser(false);
 			})
 			.catch((err) => {
@@ -67,6 +69,7 @@ export default function PostsFromUser() {
 	useEffect( () => {
 		const userPageObserver = new IntersectionObserver( (entries) => {
 			if (entries.some( (entry) => entry.isIntersecting)) {
+				setIsLoading(true);
 				setPage(previousPage => previousPage + 1);
 				setControlApiUser(true);
 			}
@@ -117,6 +120,12 @@ export default function PostsFromUser() {
 				</>
 			)}
 			<Sentinel id="userPageSentinel"></Sentinel>
+			{isLoading && page > 1 ? (
+				<>
+					<FeedLoading />
+					{/* <Text>Loading more posts</Text> */}
+				</>
+			) : null}
 		</Feed>
 	);
 }

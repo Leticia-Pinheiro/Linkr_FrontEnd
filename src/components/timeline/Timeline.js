@@ -21,37 +21,42 @@ export default function Timeline() {
 	const { userInformation } = useContext(UserContext);
 	const { setControlApi, controlApi, setControlApiUser } =
 		useContext(ControlApiContext);
-	
+
 	const [lastPostCreatedAt, setLastPostCreatedAt] = useState(null);
 	const [recentPosts, setRecentPosts] = useState([]);
-	const [page, setPage] = useState(0)
+	const [page, setPage] = useState(0);
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
-		const header = {
-			headers: {
-				Authorization: `Bearer ${userInformation.token}`,
-			},
-		};
+		async function teste() {
+			const header = {
+				headers: {
+					Authorization: `Bearer ${userInformation.token}`,
+				},
+			};
 
-		axios
-			.get(urls.getPosts+`?page=${page}`, header)
-			.then((response) => {
-				setControlLoading(false);
-				setPostsData(response.data);
-				setControlApi(false);
+			axios
+				.get(urls.getPosts+`?page=${page}`, header)
+				.then((response) => {
+					setControlLoading(false);
+					setIsLoading(false);
+					setPostsData(response.data);
+					setControlApi(false);
 
-				if (response.data.posts) {
-					setLastPostCreatedAt(response.data.posts[0].createdAt);
-				}
-			})
-			.catch((err) => {
-				setControlLoading(false);
-				setPostsData("error");
-				setControlApi(false);
-			});
+					if (response.data.posts.length) {
+						setLastPostCreatedAt(response.data.posts[0].createdAt);
+					}
+				})
+				.catch((err) => {
+					setControlLoading(false);
+					setPostsData("error");
+					setControlApi(false);
+				});
+		}
+		teste();
 	}, [controlApi]);
 
-	useInterval( () => {
+	useInterval(() => {
 		const body = {
 			lastPostCreatedAt,
 		};
@@ -71,6 +76,7 @@ export default function Timeline() {
 	useEffect( () => {
 		const timelineObserver = new IntersectionObserver( (entries) => {
 			if (entries.some( (entry) => entry.isIntersecting)) {
+				setIsLoading(true);
 				setPage(previousPage => previousPage + 1);
 				setControlApi(true);
 			}
@@ -116,10 +122,17 @@ export default function Timeline() {
 									elem={elem}
 									setControlApi={setControlApi}
 									setControlApiUser={setControlApiUser}
+									userInformation={userInformation}
 								/>
 							))
 						)}
 						<Sentinel id="timeLineSentinel"/>
+						{isLoading && page > 1 ? (
+							<>
+								<FeedLoading />
+								{/* <Text>Loading more posts</Text> */}
+							</>
+						) : null}
 					</ContainerTimeline>
 				</Container>
 				<HashtagBox />
@@ -128,10 +141,8 @@ export default function Timeline() {
 	);
 }
 
-const Teste = styled.button`
-	width: 100px;
-	height: 40px;
-	background-color: blue;
+const Text = styled.h3`
+	padding: 600px auto 100px auto;
 `;
 
 const Sentinel = styled.div`

@@ -1,20 +1,27 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import  {  ReactTagify  }  from  "react-tagify"
+import { ReactTagify } from "react-tagify";
 import DeleteModal from "./DeleteModal";
 import { MdDelete } from "react-icons/md";
 import { FaPencilAlt } from "react-icons/fa";
+import { IoMdRepeat } from "react-icons/io";
 import Like from "./Like";
 import Balloon from "./Balloon";
 import EditPost from "./EditPost";
+import RepostModal from "./RepostModal";
+import axios from "axios";
+import urls from "../shared/urls";
 
 export default function RenderPosts({
 	elem,
 	setControlApi,
 	setControlApiUser,
+	userInformation,
 }) {
-	const [modalIsOpen, setIsOpen] = useState(false);
+	const [modalDeleteIsOpen, setIsOpenDelete] = useState(false);
+	const [modalRepostIsOpen, setIsOpenRepost] = useState(false);
+	const [totalRepost, setTotalRepost] = useState(0);
 	const [isVisible, setIsVisible] = useState(false);
 	const [isEditable, setIsEditable] = useState(false);
 	const [editableText, setEditableText] = useState(null);
@@ -27,16 +34,16 @@ export default function RenderPosts({
 		window.open(url);
 	}
 
-	const  tagStyle  =  { 		
-		fontWeight : 700 , 
-		cursor : 'pointer' 
-	  } ;
-	  
-	function goToTagPosts(tag){
+	const tagStyle = {
+		fontWeight: 700,
+		cursor: "pointer",
+	};
+
+	function goToTagPosts(tag) {
 		const hashtag = tag.slice(1);
-		navigate(`/hashtag/${hashtag}`)
+		navigate(`/hashtag/${hashtag}`);
 		window.location.reload(false);
-	}	
+	}
 
 	function goToUserPosts(id) {
 		navigate(`/user/${id}`);
@@ -56,15 +63,46 @@ export default function RenderPosts({
 		setIsDisabled(false);
 	}
 
+	useEffect(() => {
+		axios
+			.get(`${urls.repostTotal}/${elem.id}`)
+			.then((response) => {
+				setTotalRepost(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
+
 	return (
-		<>
-			<Box>
+		<Box>
+			{elem.repostFrom ? (
+				<BoxRepost>
+					<RepostIcon />
+					Re-posted by
+					<RepostName>
+						{elem.repostFrom === userInformation.username
+							? "you"
+							: elem.repostFrom}
+					</RepostName>
+				</BoxRepost>
+			) : null}
+
+			<BoxPosts>
 				<DeleteModal
-					setIsOpen={setIsOpen}
-					modalIsOpen={modalIsOpen}
+					setIsOpen={setIsOpenDelete}
+					modalIsOpen={modalDeleteIsOpen}
 					id={elem.id}
 					setControlApi={setControlApi}
 				/>
+
+				<RepostModal
+					setIsOpen={setIsOpenRepost}
+					modalIsOpen={modalRepostIsOpen}
+					id={elem.id}
+					setControlApi={setControlApi}
+				/>
+
 				<BoxPictureAndLike>
 					<Picture src={elem.imageUrl} alt="avatar" />
 
@@ -78,14 +116,18 @@ export default function RenderPosts({
 						/>
 						{isVisible ? <Balloon whoLiked={elem.whoLiked} /> : null}
 					</Likes>
+
+					<Repost>
+						<RepostIconPosts onClick={() => setIsOpenRepost(true)} />
+						{totalRepost} re-posts
+					</Repost>
 				</BoxPictureAndLike>
 				<BoxPostTexts>
-
 					<Delete
 						display={
 							elem.email === deserializationData.email ? "true" : "false"
 						}
-						onClick={() => setIsOpen(true)}
+						onClick={() => setIsOpenDelete(true)}
 					/>
 					<Edit
 						display={
@@ -111,13 +153,13 @@ export default function RenderPosts({
 							setControlApiUser={setControlApiUser}
 						/>
 					) : (
-
-					< ReactTagify  
-					tagStyle = { tagStyle }  
-					tagClicked = { ( tag ) => goToTagPosts(tag)}
-					> 
-						<TextPost>{elem.text}</TextPost>
-					</ReactTagify>)}
+						<ReactTagify
+							tagStyle={tagStyle}
+							tagClicked={(tag) => goToTagPosts(tag)}
+						>
+							<TextPost>{elem.text}</TextPost>
+						</ReactTagify>
+					)}
 
 					<LinkContainer onClick={() => openLink(elem.url)}>
 						<LinkTextContainer>
@@ -136,19 +178,16 @@ export default function RenderPosts({
 						/>
 					</LinkContainer>
 				</BoxPostTexts>
-			</Box>
-		</>
+			</BoxPosts>
+		</Box>
 	);
 }
 
 const Box = styled.div`
-	display: flex;
 	width: 611px;
-	height: 276px;
-	border-radius: 16px;
-	padding: 5px;
-	background-color: black;
+	background: #1e1e1e;
 	margin-bottom: 20px;
+	border-radius: 16px;
 
 	:last-child {
 		margin-bottom: 0;
@@ -157,18 +196,40 @@ const Box = styled.div`
 	@media (max-width: 700px) {
 		border-radius: 0;
 		margin: 0 0 15px 0;
-		width: 100%;
+		width: 100vw;
 	}
+`;
+
+const BoxPosts = styled.div`
+	display: flex;
+	height: 276px;
+	width: 100%;
+	border-radius: 16px;
+	padding: 5px;
+	background-color: black;
+`;
+
+const BoxRepost = styled.div`
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 30px;
+	background: #1e1e1e;
+	border-radius: 16px;
+	color: white;
+	font-size: 14px;
+	font-family: "Lato";
+	padding: 0 0 0 15px;
 `;
 
 const BoxPictureAndLike = styled.div`
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
 	width: 20%;
 	height: 100%;
-	padding: 15px 0 0 0;
+	padding: 20px 0;
 `;
 
 const BoxPostTexts = styled.div`
@@ -199,7 +260,6 @@ const Picture = styled.img`
 const Likes = styled.div`
 	display: flex;
 	justify-content: center;
-	margin: 25px 0 0 0;
 	cursor: pointer;
 	position: relative;
 `;
@@ -303,4 +363,29 @@ const Edit = styled(FaPencilAlt)`
 	top: 17px;
 	right: 37px;
 	cursor: pointer;
+`;
+
+const RepostIcon = styled(IoMdRepeat)`
+	color: #ffffff;
+	font-size: 20px;
+`;
+
+const RepostName = styled.p`
+	font-weight: bold;
+	margin-left: 4px;
+`;
+
+const Repost = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-family: "Lato";
+	font-size: 11px;
+	color: white;
+	cursor: pointer;
+`;
+
+const RepostIconPosts = styled(IoMdRepeat)`
+	color: #ffffff;
+	font-size: 27px;
 `;

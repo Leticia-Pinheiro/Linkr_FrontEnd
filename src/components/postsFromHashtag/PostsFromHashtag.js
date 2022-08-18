@@ -21,6 +21,7 @@ export default function PostsFromHashtag() {
 		useContext(ControlApiContext);
 
 	const [page, setPage] = useState(0);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const config = {
 		headers: {
@@ -34,6 +35,7 @@ export default function PostsFromHashtag() {
 			.then((response) => {
 				setTagPosts(response.data);
 				setControlLoading(false);
+				setIsLoading(false);
 				setControlApiUser(false);
 			})
 			.catch((err) => {
@@ -51,6 +53,7 @@ export default function PostsFromHashtag() {
 	useEffect( () => {
 		const hashtagPageObserver = new IntersectionObserver( (entries) => {
 			if (entries.some( (entry) => entry.isIntersecting)) {
+				setIsLoading(true);
 				setPage(previousPage => previousPage + 1);
 				setControlApiUser(true);
 			}
@@ -87,6 +90,12 @@ export default function PostsFromHashtag() {
 				</>
 			)}
 			<Sentinel id="hashtagPageSentinel"></Sentinel>
+			{isLoading && page > 1 ? (
+				<>
+					<FeedLoading />
+					{/* <Text>Loading more posts</Text> */}
+				</>
+			) : null}
 		</Feed>
 	);
 }

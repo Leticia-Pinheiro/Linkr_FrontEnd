@@ -16,6 +16,7 @@ export default function App() {
 		imageAvatar: localStorage?.getItem("avatar"),
 		token: localStorage?.getItem("token"),
 		username: localStorage?.getItem("username"),
+		userId: localStorage?.getItem("userId"),
 	});
 	const [controlApi, setControlApi] = useState(true);
 	const [controlApiUser, setControlApiUser] = useState(true);
