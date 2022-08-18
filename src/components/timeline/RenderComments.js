@@ -26,7 +26,9 @@ export default function RenderComments({ comments, author, postId }) {
 		},
 	};
 
-	async function postComment() {
+	async function postComment(e) {
+		e.preventDefault();
+
 		const body = {
 			postId,
 			comment: commentDataInput.text,
@@ -73,7 +75,7 @@ export default function RenderComments({ comments, author, postId }) {
 					src={userInformation.imageAvatar || userInformation.image}
 					alt="avatar"
 				/>
-				<Form>
+				<Form onSubmit={postComment}>
 					<InputComment
 						type="text"
 						name="text"
@@ -82,7 +84,9 @@ export default function RenderComments({ comments, author, postId }) {
 						value={commentDataInput.text}
 						required
 					/>
-					<SendIcon onClick={postComment} />
+					<Button type="submit">
+						<SendIcon />
+					</Button>
 				</Form>
 			</BoxPostComment>
 		</Box>
@@ -153,6 +157,8 @@ const Text = styled.p`
 	font-size: 14px;
 	color: #acacac;
 	margin-top: 5px;
+	word-wrap: break-word;
+	word-break: break-all;
 `;
 
 const BoxPostComment = styled.div`
@@ -188,8 +194,13 @@ const InputComment = styled.input`
 const SendIcon = styled(IoPaperPlaneOutline)`
 	font-size: 20px;
 	color: #f3f3f3;
-	cursor: pointer;
+`;
+
+const Button = styled.button`
 	position: absolute;
-	right: 5px;
-	top: 11px;
+	top: 9px;
+	right: 1px;
+	background: #252525;
+	border: none;
+	cursor: pointer;
 `;
