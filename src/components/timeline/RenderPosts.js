@@ -6,12 +6,15 @@ import DeleteModal from "./DeleteModal";
 import { MdDelete } from "react-icons/md";
 import { FaPencilAlt } from "react-icons/fa";
 import { IoMdRepeat } from "react-icons/io";
+
 import Like from "./Like";
 import Balloon from "./Balloon";
 import EditPost from "./EditPost";
 import RepostModal from "./RepostModal";
 import axios from "axios";
 import urls from "../shared/urls";
+import Comments from "./Comments";
+import RenderComments from "./RenderComments";
 
 export default function RenderPosts({
 	elem,
@@ -26,6 +29,8 @@ export default function RenderPosts({
 	const [isEditable, setIsEditable] = useState(false);
 	const [editableText, setEditableText] = useState(null);
 	const [isDisabled, setIsDisabled] = useState(true);
+	const [comments, setComments] = useState(null);
+	const [renderComments, setRenderComments] = useState(false);
 	let loginStoraged = localStorage.getItem("login");
 	let deserializationData = JSON.parse(loginStoraged);
 	const navigate = useNavigate();
@@ -117,6 +122,13 @@ export default function RenderPosts({
 						{isVisible ? <Balloon whoLiked={elem.whoLiked} /> : null}
 					</Likes>
 
+					<Comments
+						postId={elem.id}
+						setComments={setComments}
+						setRenderComments={setRenderComments}
+						renderComments={renderComments}
+					/>
+
 					<Repost>
 						<RepostIconPosts onClick={() => setIsOpenRepost(true)} />
 						{totalRepost} re-posts
@@ -179,6 +191,14 @@ export default function RenderPosts({
 					</LinkContainer>
 				</BoxPostTexts>
 			</BoxPosts>
+			{renderComments ? (
+				<RenderComments
+					comments={comments}
+					userInformation={userInformation}
+					author={elem.userId}
+					postId={elem.id}
+				/>
+			) : null}
 		</Box>
 	);
 }
