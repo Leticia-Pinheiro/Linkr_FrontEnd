@@ -67,6 +67,7 @@ export default function Timeline() {
 		const promise = axios.post(`${urls.loadPosts}`, body, header);
 
 		promise.then((response) => {
+			response.data.pop();
 			setRecentPosts(response.data);
 		});
 	}, 5000);
