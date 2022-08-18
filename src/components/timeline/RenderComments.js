@@ -39,6 +39,7 @@ export default function RenderComments({
 			.post(urls.comments, body, config)
 			.then(() => {
 				setControlApiComments(true);
+				setCommentDataInput({ text: "" });
 			})
 			.catch((err) => {
 				console.log(err);
@@ -71,7 +72,10 @@ export default function RenderComments({
 				</div>
 			))}
 			<BoxPostComment>
-				<BoxAvatar src={userInformation.imageAvatar} alt="avatar" />
+				<BoxAvatar
+					src={userInformation.imageAvatar || userInformation.image}
+					alt="avatar"
+				/>
 				<Form>
 					<InputComment
 						type="text"
