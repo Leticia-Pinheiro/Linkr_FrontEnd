@@ -39,6 +39,7 @@ export default function RenderComments({
 			.post(urls.comments, body, config)
 			.then(() => {
 				setControlApiComments(true);
+				setCommentDataInput({ text: "" });
 			})
 			.catch((err) => {
 				console.log(err);
