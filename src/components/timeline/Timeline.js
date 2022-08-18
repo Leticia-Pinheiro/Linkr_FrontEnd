@@ -13,6 +13,8 @@ import ControlApiContext from "../context/ControlApiContext";
 import HashtagBox from "./HashtagBox";
 import LoadPostsButton from "./LoadPostsButton";
 
+import InfiniteScroll from 'react-infinite-scroller';
+
 export default function Timeline() {
 	const [postsData, setPostsData] = useState({ posts: [], followers: [] });
 	const [controlLoading, setControlLoading] = useState(true);
@@ -22,6 +24,7 @@ export default function Timeline() {
 	
 	const [lastPostCreatedAt, setLastPostCreatedAt] = useState(null);
 	const [recentPosts, setRecentPosts] = useState([]);
+	const [page, setPage] = useState(0)
 
 	useEffect(() => {
 		const header = {
@@ -31,7 +34,7 @@ export default function Timeline() {
 		};
 
 		axios
-			.get(urls.getPosts, header)
+			.get(urls.getPosts+`?page=${page}`, header)
 			.then((response) => {
 				setControlLoading(false);
 				setPostsData(response.data);
@@ -62,10 +65,19 @@ export default function Timeline() {
 
 		promise.then((response) => {
 			setRecentPosts(response.data);
-			console.log(lastPostCreatedAt)
-			console.log(response.data)
 		});
 	}, 5000);
+
+	useEffect( () => {
+		const timelineObserver = new IntersectionObserver( (entries) => {
+			if (entries.some( (entry) => entry.isIntersecting)) {
+				setPage(previousPage => previousPage + 1);
+				setControlApi(true);
+			}
+		});
+		timelineObserver.observe(document.querySelector('#timeLineSentinel'));
+		return () => timelineObserver.disconnect();
+	}, []);
 
 	return (
 		<Feed>
@@ -107,6 +119,7 @@ export default function Timeline() {
 								/>
 							))
 						)}
+						<Sentinel id="timeLineSentinel"/>
 					</ContainerTimeline>
 				</Container>
 				<HashtagBox />
@@ -114,6 +127,15 @@ export default function Timeline() {
 		</Feed>
 	);
 }
+
+const Teste = styled.button`
+	width: 100px;
+	height: 40px;
+	background-color: blue;
+`;
+
+const Sentinel = styled.div`
+`;
 
 const Title = styled.p`
 	font-family: "Oswald";

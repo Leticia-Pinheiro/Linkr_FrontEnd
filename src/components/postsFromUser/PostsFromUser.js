@@ -21,6 +21,8 @@ export default function PostsFromUser() {
 		useContext(ControlApiContext);
 	const [disableButton, setDisableButton] = useState(false);
 
+	const [page, setPage] = useState(0);
+
 	const config = {
 		headers: {
 			Authorization: `Bearer ${userInformation.token}`,
@@ -29,7 +31,7 @@ export default function PostsFromUser() {
 
 	useEffect(() => {
 		axios
-			.get(`${urls.getPosts}/${id}`, config)
+			.get(`${urls.getPosts}/${id}?page=${page}`, config)
 			.then((response) => {
 				setUserPosts(response.data);
 				setControlLoading(false);
@@ -61,6 +63,17 @@ export default function PostsFromUser() {
 				alert(err.response.data);
 			});
 	}
+
+	useEffect( () => {
+		const userPageObserver = new IntersectionObserver( (entries) => {
+			if (entries.some( (entry) => entry.isIntersecting)) {
+				setPage(previousPage => previousPage + 1);
+				setControlApiUser(true);
+			}
+		});
+		userPageObserver.observe(document.querySelector('#userPageSentinel'));
+		return () => userPageObserver.disconnect();
+	}, []);
 
 	return (
 		<Feed>
@@ -97,14 +110,20 @@ export default function PostsFromUser() {
 									/>
 								))
 							)}
+							
 						</ContainerTimeline>
 						{!userPosts.length ? null : <HashtagBox />}
 					</Container>
 				</>
 			)}
+			<Sentinel id="userPageSentinel"></Sentinel>
 		</Feed>
 	);
 }
+
+const Sentinel = styled.div`
+
+`
 
 const Title = styled.p`
 	font-family: "Oswald";

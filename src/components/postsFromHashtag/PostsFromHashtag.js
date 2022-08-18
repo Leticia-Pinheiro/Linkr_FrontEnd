@@ -20,6 +20,8 @@ export default function PostsFromHashtag() {
 	const { setControlApi, setControlApiUser, controlApiUser } =
 		useContext(ControlApiContext);
 
+	const [page, setPage] = useState(0);
+
 	const config = {
 		headers: {
 			Authorization: `Bearer ${userInformation.token}`,
@@ -28,7 +30,7 @@ export default function PostsFromHashtag() {
 
 	useEffect(() => {
 		axios
-			.get(`${urls.getHashtag}/${hashtag}`, config)
+			.get(`${urls.getHashtag}/${hashtag}?page=${page}`, config)
 			.then((response) => {
 				setTagPosts(response.data);
 				setControlLoading(false);
@@ -45,6 +47,17 @@ export default function PostsFromHashtag() {
 				}
 			});
 	}, [controlApiUser]);
+
+	useEffect( () => {
+		const hashtagPageObserver = new IntersectionObserver( (entries) => {
+			if (entries.some( (entry) => entry.isIntersecting)) {
+				setPage(previousPage => previousPage + 1);
+				setControlApiUser(true);
+			}
+		});
+		hashtagPageObserver.observe(document.querySelector('#hashtagPageSentinel'));
+		return () => hashtagPageObserver.disconnect();
+	}, []);
 
 	return (
 		<Feed>
@@ -73,9 +86,13 @@ export default function PostsFromHashtag() {
 					</Container>
 				</>
 			)}
+			<Sentinel id="hashtagPageSentinel"></Sentinel>
 		</Feed>
 	);
 }
+
+const Sentinel = styled.div`
+`
 
 const Title = styled.p`
 	font-family: "Oswald";
