@@ -71,7 +71,10 @@ export default function RenderComments({
 				</div>
 			))}
 			<BoxPostComment>
-				<BoxAvatar src={userInformation.imageAvatar} alt="avatar" />
+				<BoxAvatar
+					src={userInformation.imageAvatar || userInformation.image}
+					alt="avatar"
+				/>
 				<Form>
 					<InputComment
 						type="text"
