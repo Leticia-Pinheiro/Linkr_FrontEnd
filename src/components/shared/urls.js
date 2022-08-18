@@ -19,6 +19,8 @@ const urls = {
 	follow: `${BASE_URL}/follow`,
 	repost: `${BASE_URL}/repost`,
 	repostTotal: `${BASE_URL}/repost`,
+	commentsTotal: `${BASE_URL}/comments`,
+	comments: `${BASE_URL}/comments`,
 };
 
 export default urls;

@@ -20,6 +20,7 @@ export default function App() {
 	});
 	const [controlApi, setControlApi] = useState(true);
 	const [controlApiUser, setControlApiUser] = useState(true);
+	const [controlApiComments, setControlApiComments] = useState(false);
 
 	return (
 		<>
@@ -27,7 +28,14 @@ export default function App() {
 			<GlobalStyle />
 
 			<ControlApiContext.Provider
-				value={{ setControlApi, controlApi, setControlApiUser, controlApiUser }}
+				value={{
+					setControlApi,
+					controlApi,
+					setControlApiUser,
+					controlApiUser,
+					controlApiComments,
+					setControlApiComments,
+				}}
 			>
 				<UserContext.Provider
 					value={{
