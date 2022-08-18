@@ -32,8 +32,6 @@ export default function Login() {
 			.then((response) => {
 				setUserInformation(response.data);
 
-				console.log(response.data);
-
 				let serializationData = JSON.stringify({ ...loginDataInput });
 				localStorage.setItem("login", serializationData);
 				localStorage.setItem("avatar", response.data.image);

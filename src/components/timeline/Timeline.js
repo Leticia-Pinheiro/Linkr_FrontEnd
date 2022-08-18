@@ -19,9 +19,11 @@ export default function Timeline() {
 	const { userInformation } = useContext(UserContext);
 	const { setControlApi, controlApi, setControlApiUser } =
 		useContext(ControlApiContext);
-
+	console.log(postsData)
 	const [lastPostCreatedAt, setLastPostCreatedAt] = useState(null);
 	const [recentPosts, setRecentPosts] = useState([]);
+	const [page, setPage] = useState(0);
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		async function teste() {
@@ -32,9 +34,10 @@ export default function Timeline() {
 			};
 
 			axios
-				.get(urls.getPosts, header)
+				.get(urls.getPosts+`?page=${page}`, header)
 				.then((response) => {
 					setControlLoading(false);
+					setIsLoading(false);
 					setPostsData(response.data);
 					setControlApi(false);
 
@@ -65,10 +68,20 @@ export default function Timeline() {
 
 		promise.then((response) => {
 			setRecentPosts(response.data);
-			// console.log(lastPostCreatedAt);
-			// console.log(response.data);
 		});
 	}, 5000);
+
+	useEffect( () => {
+		const timelineObserver = new IntersectionObserver( (entries) => {
+			if (entries.some( (entry) => entry.isIntersecting)) {
+				setIsLoading(true);
+				setPage(previousPage => previousPage + 1);
+				setControlApi(true);
+			}
+		});
+		timelineObserver.observe(document.querySelector('#timeLineSentinel'));
+		return () => timelineObserver.disconnect();
+	}, []);
 
 	return (
 		<Feed>
@@ -111,6 +124,13 @@ export default function Timeline() {
 								/>
 							))
 						)}
+						<Sentinel id="timeLineSentinel"/>
+						{isLoading && page > 1 ? (
+							<>
+								<FeedLoading />
+								{/* <Text>Loading more posts</Text> */}
+							</>
+						) : null}
 					</ContainerTimeline>
 				</Container>
 				<HashtagBox />
@@ -118,6 +138,13 @@ export default function Timeline() {
 		</Feed>
 	);
 }
+
+const Text = styled.h3`
+	padding: 600px auto 100px auto;
+`;
+
+const Sentinel = styled.div`
+`;
 
 const Title = styled.p`
 	font-family: "Oswald";
