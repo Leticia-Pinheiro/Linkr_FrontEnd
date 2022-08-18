@@ -19,7 +19,7 @@ export default function Timeline() {
 	const { userInformation } = useContext(UserContext);
 	const { setControlApi, controlApi, setControlApiUser } =
 		useContext(ControlApiContext);
-	console.log(postsData)
+		
 	const [lastPostCreatedAt, setLastPostCreatedAt] = useState(null);
 	const [recentPosts, setRecentPosts] = useState([]);
 	const [page, setPage] = useState(0);
