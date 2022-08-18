@@ -24,7 +24,7 @@ export default function Timeline() {
 	const [recentPosts, setRecentPosts] = useState([]);
 	const [page, setPage] = useState(0);
 	const [isLoading, setIsLoading] = useState(false);
-
+	console.log(recentPosts)
 	useEffect(() => {
 		async function teste() {
 			const header = {
