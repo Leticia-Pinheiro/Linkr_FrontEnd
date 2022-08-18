@@ -194,7 +194,6 @@ export default function RenderPosts({
 			{renderComments ? (
 				<RenderComments
 					comments={comments}
-					userInformation={userInformation}
 					author={elem.userId}
 					postId={elem.id}
 				/>
