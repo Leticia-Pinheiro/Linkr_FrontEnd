@@ -13,15 +13,13 @@ import ControlApiContext from "../context/ControlApiContext";
 import HashtagBox from "./HashtagBox";
 import LoadPostsButton from "./LoadPostsButton";
 
-import InfiniteScroll from 'react-infinite-scroller';
-
 export default function Timeline() {
 	const [postsData, setPostsData] = useState({ posts: [], followers: [] });
 	const [controlLoading, setControlLoading] = useState(true);
 	const { userInformation } = useContext(UserContext);
 	const { setControlApi, controlApi, setControlApiUser } =
 		useContext(ControlApiContext);
-
+	console.log(postsData)
 	const [lastPostCreatedAt, setLastPostCreatedAt] = useState(null);
 	const [recentPosts, setRecentPosts] = useState([]);
 	const [page, setPage] = useState(0);
