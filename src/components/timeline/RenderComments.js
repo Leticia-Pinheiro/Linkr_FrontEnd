@@ -5,17 +5,14 @@ import axios from "axios";
 
 import urls from "../shared/urls";
 import ControlApiContext from "../context/ControlApiContext";
+import UserContext from "../context/UserContext";
 
-export default function RenderComments({
-	comments,
-	userInformation,
-	author,
-	postId,
-}) {
+export default function RenderComments({ comments, author, postId }) {
 	const [commentDataInput, setCommentDataInput] = useState({
 		text: "",
 	});
 	const { setControlApiComments } = useContext(ControlApiContext);
+	const { userInformation } = useContext(UserContext);
 
 	function handleFormChange(e) {
 		let data = { ...commentDataInput };
